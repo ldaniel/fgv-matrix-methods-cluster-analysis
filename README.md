@@ -1,2 +1,20 @@
-# matrix-methods-cluster-analysis
-Practicing Matrix Methods and Cluster Analysis. 
+# Introduction
+
+Mathematical Matrix Methods lie at the root of most methods of machine learning and data analysis of tabular data. Cluster analysis or clustering is the task of grouping a set of objects in such a way that objects in the same group (called a cluster) are more similar (in some sense) to each other than to those in other groups (clusters).
+
+In this project, we developed a set of works to go further in Matrix Methods and Cluster-Analysis.
+
+This website intends to present the work analysis for the *"Métodos Matriciais e Análise de Clusters"* class assignment.
+
+See the final website report at: [https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis).
+
+## Professor
+- Rodrigo Togneri
+
+## Authors / Students
+|Profile|Name|E-mail|
+|---|---|---|
+|<a href="https://github.com/DanielFCampos"><img src="https://avatars2.githubusercontent.com/u/31582602?s=460&v=4" title="DanielFCampos" width="80" height="80"></a>|Daniel Campos|[(daniel.ferraz.campos@gmail.com)](daniel.ferraz.campos@gmail.com)|
+|<a href="https://github.com/ldaniel"><img src="https://avatars2.githubusercontent.com/u/205534?s=460&v=4" title="ldaniel" width="80" height="80"></a>|Leandro Daniel|[(contato@leandrodaniel.com)](contato@leandrodaniel.com)|
+|<a href="https://github.com/RodriGonca"><img src="https://avatars2.githubusercontent.com/u/50252438?s=460&v=4" title="RodriGonca" width="80" height="80"></a>|Rodrigo Goncalves|[(rodrigo.goncalves@me.com)](rodrigo.goncalves@me.com)|
+|<a href="https://github.com/ygorlima1"><img src="https://avatars2.githubusercontent.com/u/52429828?s=460&v=4" title="ygorlima1" width="80" height="80"></a>|Ygor Lima|[(ygor_redesocial@hotmail.com)](ygor_redesocial@hotmail.com)|
