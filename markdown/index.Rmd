@@ -1,0 +1,29 @@
+---
+title: 'FGV MBA: Business Analytics & Big Data'
+---
+
+# Predictive analysis
+
+In the predictive analysis discipline we aim to develop statistical models, based on data, for a particular outcome of interest. From this model, we make sure that behavioral learning and past experiences have a model with good generalization.
+
+In this project, we developed a set of models using a real anonymized Czech bank transactions, account info, and loan records released for [*PKDD'99 Discovery Challenge*](https://raw.githubusercontent.com/ldaniel/Predictive-Analytics/master/enunciation/PKDD'99%C2%A0Discovery%C2%A0Challenge.pdf)
+
+This website intends to present the work analysis for the [*"Análise Preditiva" class assignment*](https://raw.githubusercontent.com/ldaniel/Predictive-Analytics/master/enunciation/projeto_final.pdf).
+
+Use the menu above to navigate and see the final report.
+
+## Professor
+- João Rafael Dias (magister.analytica@gmail.com)
+
+## Students / ID (matrícula)
+
+- <a href="https://github.com/DanielFCampos"><img src="https://avatars2.githubusercontent.com/u/31582602?s=460&v=4" title="DanielFCampos" width="40" height="40"></a> [Daniel Campos](mailto:daniel.ferraz.campos@gmail.com) / A57635769
+- <a href="https://github.com/ldaniel"><img src="https://avatars2.githubusercontent.com/u/205534?s=460&v=4" title="ldaniel" width="40" height="40"></a>  [Leandro Daniel](mailto:contato@leandrodaniel.com) / A57622988
+- <a href="https://github.com/RodriGonca"><img src="https://avatars2.githubusercontent.com/u/50252438?s=460&v=4" title="RodriGonca" width="40" height="40"></a> [Rodrigo Goncalves](mailto:rodrigo.goncalves@me.com) / A57566093
+- <a href="https://github.com/ygorlima1"><img src="https://avatars2.githubusercontent.com/u/52429828?s=460&v=4" title="ygorlima1" width="40" height="40"></a>  [Ygor Lima](mailto:ygor_redesocial@hotmail.com) / A57549661
+
+## Where to find the source code of this project?
+This project can be found and downloaded on GitHub: https://github.com/ldaniel/Predictive-Analytics
+
+> Valar Morghulis!
+> :)
