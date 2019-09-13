@@ -28,14 +28,14 @@ library(geojsonio)
 
 ```{r scripts_data_preparation, include=FALSE}
 # loading required steps before performing the analysis
-source("./scripts/step_01_create_functions.R")
-source("./scripts/step_02_data_ingestion.R")
-source("./scripts/step_03_data_cleaning.R")
+source("./src/util/auxiliary_functions.R")
+source("./src/datapreparation/step_02_data_ingestion.R")
+source("./src/datapreparation/step_03_data_cleaning.R")
 ```
 
 # Using a step by step approach
 
-Before starting the Berka Analysis, a few important steps were taken in order to prepare the source data files. These steps are listed below:
+Before starting the analysis for the {{__myproject__}}, a few important steps were taken in order to prepare the source data files. These steps are listed below:
 
 - **Step 01**: Create Functions;
 - **Step 02**: Data Ingestion;
@@ -51,58 +51,32 @@ This step create functions to be used in the next steps. Following, all function
 
 ## Specific data ingestion functions
 
-### GetGenderFromBirthnumber 
-The birth_number column is given in the form of YYMMDD for men, and YYMM+50DD for women. The objective of this function is to return the gender of the client via the birth_number.
+### Function 1
+Description of function 1.
 
-``` {r GetGenderFromBirthnumber, eval = FALSE}
-GetGenderFromBirthnumber <- function(var_birth_number) {
-  month <- substr(var_birth_number, 3, 4)
-  result <- ifelse(as.integer(month) > 50, "female", "male")
-  
-  return(as.factor(result))
-}
+``` {r function_1_name, eval = FALSE}
+# Function 1 code
 ```
 
-### GetBirthdateFromBirthnumber
-The birth_number column is given in the form of YYMMDD for men, # and YYMM+50DD for women. The objective of this function is to return the final birthday as Date.
+### Function 2
+Description of function 2.
 
-``` {r GetBirthdateFromBirthnumber, eval = FALSE}
-GetBirthdateFromBirthnumber <- function(var_birth_number, var_gender) {
-  year <- paste("19", substr(var_birth_number, 1, 2), sep="")
-  month <- ifelse(var_gender == "male", substr(var_birth_number, 3, 4), 
-  as.integer(substr(var_birth_number, 3, 4)) - 50)
-  day <- substr(var_birth_number, 5, 6)
-  result <- as.Date(paste(year, "-", month, "-", day, sep=""), format = "%Y-%m-%d")
-  
-  return(result)
-}
+``` {r function_2_name, eval = FALSE}
+# Function 2 code
 ```
 
-### ConvertToDate
-The objective of this function is to convert the strange bank date style to the regular R Date datatype.
+### Function 3
+Description of function 3.
 
-``` {r ConvertToDate, eval = FALSE}
-ConvertToDate <- function(var_date) {
-  year <- paste("19", substr(var_date, 1, 2), sep="")
-  month <- substr(var_date, 3, 4)
-  day <- substr(var_date, 5, 6)
-  result <- as.Date(paste(year, "-", month, "-", day, sep=""), format = "%Y-%m-%d")
-  
-  return(result)
-}
+``` {r function_3_name, eval = FALSE}
+# Function 3 code
 ```
 
-### GetAgeFromBirthnumber
-The objective of this function is to get age given the birth_number.
+### Function n
+Description of function n.
 
-``` {r GetAgeFromBirthnumber, eval = FALSE}
-GetAgeFromBirthnumber <- function(var_birth_number) {
-  base_year <- 99 # considering 1999 as the base year for this exercise
-  year <- substr(var_birth_number, 1, 2)
-  result <- base_year - as.integer(year)
-  
-  return(result)
-}
+``` {r function_n_name, eval = FALSE}
+# Function n code
 ```
 
 ## Metrics auxiliary functions
@@ -183,7 +157,7 @@ modelMetrics <- function(realData, predData, stepping = 0.01,
 
 ## Data preparation functions
 
-#### SplitTestTrainDataset
+#### createTestAndTrainSamples
 See topic "Splitting dataset into Train and Test data" for further details.
 
 ## Plot auxiliary functions
@@ -394,12 +368,10 @@ The process of data ingestion — preparing data for analysis — usually includ
 
 During this step, in addition to the loading data processes, it was performed data casting, column renaming and small touch-ups. The list below describe each table adjustment taken:
 
-- **District**: renaming columns and casting columns with decimal or "?" values;
-- **Credit Card**: casting column issued in creditcard table from string to datetime data type;
-- **Account**: casting column date in account table from string to datetime data type;
-- **Loan**: casting columns in table loan to the right data types;
-- **Permanent Order**: casting columns with decimal values;
-- **Transaction**: casting columns in table transaction to the right data types.
+- **Table 1**: short description about what was done in the table 1;
+- **Table 2**: short description about what was done in the table 2;
+- **Table 3**: short description about what was done in the table 3;
+- **Table n**: short description about what was done in the table n;
 
 *******************************************************************************
 
@@ -408,10 +380,6 @@ During this step, in addition to the loading data processes, it was performed da
 The objective of this step is analysing missing values and other strange conditions. In order to accomplish this task, a few R functions were used to quickly discover missing values, like NA and empty fields.
 
 First thing done, was fixing observations in k_symbol transaction table with ' ' (one space) to empty string (''), using the following command.
-
-``` {r fix_ksymbol, eval = FALSE}
-transaction$k_symbol = trimws(transaction$k_symbol)
-```
 
 Then, the command below was used to find out any NA values in each table.
 
@@ -422,7 +390,7 @@ sapply(TableName, function(x) sum(is.na(x)))
 Solely the **transaction** table has NA values, in the following columns:
 
 ```{r transaction_na_cols, echo=FALSE, results = 'asis'}
-kable(transaction_na_cols)
+kable(mytable_na_cols)
 ```
 
 Finally, the following command was used in each table to find out where empty values was hidden. 
@@ -434,7 +402,7 @@ sapply(TableName, function(x) table(as.character(x) =="")["TRUE"])
 Again, only the **transaction** table had empty values, according to the table below:
 
 ```{r echo=FALSE, results = 'asis'}
-kable(transaction_empty_cols)
+kable(mytable_empty_cols)
 ```
 
 For the exploration analysis report, we did not take any additional action, since the missing values was not relevant.
@@ -447,36 +415,14 @@ In order to make the data information more understandable, it was translated som
 ``` {r translate, eval = FALSE}
 # Translating relevant labels and domains to english --------------------------------------------
 
-disposition$type <- plyr::mapvalues(disposition$type, c('OWNER', 'DISPONENT'), 
-                                    c('Owner', 'User'))
+mytable$x_var_1 <- plyr::mapvalues(mytable$x_var_1, 
+                                   c('Other_Language_Column_Name1', 
+                                     'Other_Language_Column_Name2', 
+                                     'Other_Language_Column_Name3'),
+                                   c('English_Column_Name1', 
+                                     'English_Column_Name2', 
+                                     'English_Column_Name3'))
 
-account$frequency <- plyr::mapvalues(account$frequency,
-                                     c('POPLATEK MESICNE', 'POPLATEK TYDNE', 
-                                       'POPLATEK PO OBRATU'),
-                                     c('Monthly', 'Weekly', 'On Transaction'))
-
-permanent_order$k_symbol <- plyr::mapvalues(permanent_order$k_symbol,
-                                            c('POJISTNE', 'SIPO', 'LEASING', 'UVER'),
-                                            c('insurrance payment', 'household', 
-                                              'leasing', 'loan payment'))
-
-transaction$type <- plyr::mapvalues(transaction$type,
-                                    c('PRIJEM', 'VYDAJ', 'VYBER'),
-                                    c('credit', 'withdrawal', 'withdrawal in cash'))
-
-transaction$operation <- plyr::mapvalues(transaction$operation,
-                                         c('VYBER KARTOU', 'VKLAD', 'PREVOD Z UCTU', 
-                                           'VYBER', 'PREVOD NA UCET'),
-                                         c('credit card withdrawal', 'credit in cash', 
-                                           'collection from another bank', 
-                                           'withdrawal in cash', 'remittance to nother bank'))
-
-transaction$k_symbol <- plyr::mapvalues(transaction$k_symbol, 
-                                        c('POJISTNE', 'SLUZBY', 'UROK', 'SANKC. UROK', 
-                                          'SIPO', 'DUCHOD', 'UVER'),
-                                        c('insurance payment', 'statement', 
-                                          'interest credited', 'sanction interest', 
-                                          'household', 'old age pension', 'loan payment'))
 ```
 
 *******************************************************************************
@@ -484,65 +430,10 @@ transaction$k_symbol <- plyr::mapvalues(transaction$k_symbol,
 # Data Enhancement (step 5)
 This step aims to improve the analysis by adding auxiliary information. Data enhancement is all about making sure any data that is coming into the business is being looked at with a critical eye and is being filtered down to maximize its value.
 
-The code below get gender, birthday and age from birth_number column using *GetGenderFromBirthnumber* and *GetBirthdateFromBirthnumber* functions.
+<Describe what kind of data enhancement you have to do. Include chuncks of code to ilustrate what is necessary.>
 
 ``` {r client, eval = FALSE}
-client <- client %>% 
-  mutate(gender = GetGenderFromBirthnumber(birth_number)) %>% 
-  mutate(birth_date = GetBirthdateFromBirthnumber(birth_number, gender)) %>% 
-  mutate(age = GetAgeFromBirthnumber(birth_number))
-```
-
-The code below improved loan data by having a classification regarding its payment status.
-
-``` {r loan, eval = FALSE}
-loan <- mutate(loan, defaulter = 
-                as.logical(plyr::mapvalues(status, c ('A','B','C','D'), 
-                                           c(FALSE,TRUE,FALSE,TRUE))),
-                contract_status = plyr::mapvalues(status, c ('A','B','C','D'), 
-                                 c('finished','finished','running','running')),
-                                 type = 'Owner')
-```
-
-The code below improved client data by having its age group.
-
-``` {r client_age, eval = FALSE}
-client <- mutate(client, age_bin = paste(findInterval(age, 
-                 c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)) * 10,'+'))
-```
-
-The code below calculate an additional table with current and average account balance for each account.
-
-``` {r account_balance, eval = FALSE}
-account_balance <- arrange(transaction, desc(date), account_id) %>%
-  group_by(account_id) %>%
-  mutate(avg_balance = mean(balance)) %>%
-  filter(row_number() == 1) %>%
-  dplyr::select(account_id, date, balance, avg_balance)
-
-colnames(account_balance) <- c("account_id", "last_transaction_date", 'account_balance', 'avg_balance')
-```
-
-The code below calculate an additional table with the proportion of each transaction type (k_symbol) on total transaction amount of each account. That data will be used to fit various different predictive models.
-
-``` {r account_transaction_pattern, eval = FALSE}
-account_transaction_pattern <- select(transaction, c(trans_id, account_id, date, amount, k_symbol)) %>% 
-    mutate(k_symbol = ifelse(k_symbol == '' | is.na(k_symbol), 'other', k_symbol)) %>% 
-    spread(key = k_symbol, value = amount) %>%
-    replace(is.na(.), 0) %>% 
-    mutate(amount = rowSums(.[4:11])) %>%
-    group_by(account_id) %>%
-    summarise(transaction_count = n(),
-              last_transaction_date = max(date),
-              amount = sum(amount),
-              prop_household = sum(household) / amount,
-              prop_insurance_payment = sum(`insurance payment`) / amount,
-              prop_interest_credited = sum(`interest credited`) / amount,
-              prop_loan_payment = sum(`loan payment`) / amount,
-              prop_old_age_pension = sum(`old age pension`) / amount,
-              prop_other = sum(`other`) / amount,
-              prop_sanction_interest = sum(`sanction interest`) / amount,
-              prop_statement = sum(`statement`) / amount)
+# your code with the enhancements goes here
 ```
 
 *******************************************************************************
@@ -554,134 +445,15 @@ account_transaction_pattern <- select(transaction, c(trans_id, account_id, date,
 The below function was created to be used in the modeling exercises to be performed, the idea is to have a standard way to get the prepared data set already prepared with correct data types and dummies.
 
 ``` {r data_prep, eval = FALSE}
-# dataset preparation ---------------------------------------------------------
-
-# The objective of this step is to return a DataFrame to be used in predictive 
-# modeling. Therefore, it will join loan, client, district, creditcard, 
-# account_balance, account_balance_pattern. Finally, it will rename the variables 
-# and create the appropriate dummy variables to be used in the modeling process.
-
-# joining datasets
-source_dataset <- left_join(loan, disposition, by = c('account_id', 'type')) %>% 
-  left_join(client, by = 'client_id') %>%
-  left_join(district, by = 'district_id') %>% 
-  left_join(creditcard, by = 'disp_id') %>% 
-  left_join(account_balance, by = 'account_id') %>% 
-  left_join(account_transaction_pattern, by = 'account_id') %>% 
-  mutate(card_age_month = (issued %--% 
-                             make_date(1998, 12, 31)) / months(1), 
-         last_transaction_age_days = ((last_transaction_date.y %--% 
-                                         make_date(1998, 12, 31)) / days(1))) %>% 
-  dplyr::select(c("amount.x", "duration", "payments", "status", "defaulter", 
-                  "contract_status", "gender", "age", "district_name", 
-                  "region", "no_of_inhabitants", 
-                  "no_of_municip_inhabitants_less_499", 
-                  "no_of_municip_500_to_1999", "no_of_municip_2000_to_9999", 
-                  "no_of_municip_greater_10000", "no_of_cities", 
-                  "ratio_of_urban_inhabitants", 
-                  "average_salary", "unemploymant_rate_1995", 
-                  "unemploymant_rate_1996", 
-                  "no_of_enterpreneurs_per_1000_inhabitants", 
-                  "no_of_commited_crimes_1995", 
-                  "no_of_commited_crimes_1996", "type.y", 
-                  "card_age_month","account_balance", 
-                  "avg_balance","transaction_count", "amount.y", 
-                  "last_transaction_age_days", "prop_old_age_pension", 
-                  "prop_insurance_payment", 
-                  "prop_sanction_interest","prop_household", 
-                  "prop_statement", "prop_interest_credited", 
-                  "prop_loan_payment", "prop_other"))
-
-# renaming variables
-colnames(source_dataset) <- c("x_loan_amount", "x_loan_duration", "x_loan_payments", 
-                       "x_loan_status", "y_loan_defaulter", "x_loan_contract_status",
-                       "x_client_gender", "x_client_age", 
-                       "x_district_name", "x_region", 
-                       "x_no_of_inhabitants", "x_no_of_municip_inhabitants_less_499", 
-                       "x_no_of_municip_500_to_1999", "x_no_of_municip_2000_to_9999", 
-                       "x_no_of_municip_greater_10000", "x_no_of_cities", 
-                       "x_ratio_of_urban_inhabitants", 
-                       "x_average_salary", "x_unemploymant_rate_1995", 
-                       "x_unemploymant_rate_1996", 
-                       "x_no_of_enterpreneurs_per_1000_inhabitants", 
-                       "x_no_of_commited_crimes_1995", 
-                       "x_no_of_commited_crimes_1996", "x_card_type", 
-                       "x_card_age_month","x_account_balance", 
-                       "x_avg_account_balance","x_transaction_count", 
-                       "x_transaction_amount", "x_last_transaction_age_days", 
-                       "x_prop_old_age_pension", "x_prop_insurance_payment", 
-                       "x_prop_sanction_interest","x_prop_household","x_prop_statement",
-                       "x_prop_interest_credited", "x_prop_loan_payment", "x_prop_other")
-
-# excluding redundant variables
-source_dataset <- dplyr::select(source_dataset, -c("x_loan_status", "x_loan_contract_status", 
-                                     'x_prop_sanction_interest'))
-
-# coercing variable domains and data types
-source_dataset$x_card_type = ifelse(is.na(source_dataset$x_card_type), 'no card', 
-                             as.character(source_dataset$x_card_type))
-
-source_dataset$x_card_age_month = ifelse(is.na(source_dataset$x_card_age_month), 0, 
-                                  source_dataset$x_card_age_month)
-
-source_dataset$y_loan_defaulter = as.integer(source_dataset$y_loan_defaulter)
-
-# creating dummies
-source_dataset <- fastDummies::dummy_cols(source_dataset,
-                                   remove_first_dummy = TRUE,
-                                   select_columns = c("x_client_gender", "x_district_name", 
-                                                      "x_region", "x_card_type"))
-
-source_dataset <- dplyr::select(source_dataset, -c("x_client_gender", "x_district_name", "x_region", 
-                                     "x_card_type"))
-
-# reordering variables
-source_dataset <- source_dataset[ , order(names(source_dataset))]
-
-source_dataset <- dplyr::select(source_dataset, y_loan_defaulter, everything())
-
-# excluding non desirable characters in variable names
-colnames(source_dataset) <- stringr::str_replace_all(names(source_dataset), ' ', '_')
-colnames(source_dataset) <- stringr::str_replace_all(names(source_dataset), '_-_', '_')
-colnames(source_dataset) <- trimws(names(source_dataset))
+# your code with the data preparation goes here
 ```
 
 ## Splitting dataset into Train and Test data
 The below function was created to be used in the modeling exercises to be split the source_dataset into train and test datasets.
 
 ``` {r split_func, eval = FALSE}
-# SplitTestTrainDataset -------------------------------------------------------
-# The objective of this function is to split a given dataset 
-# in train and test datasets
-SplitTestTrainDataset <- function(dataset) {
-  set.seed(12345)
-  
-  dataset$y_loan_defaulter <- as.integer(dataset$y_loan_defaulter)
-  
-  index <- caret::createDataPartition(dataset$y_loan_defaulter, 
-                                      p= 0.7, list = FALSE)
-  data.train <- dataset[index, ]
-  data.test  <- dataset[-index,]
-  
-  # checking event proportion in sample and test datasets against full dataset.
-  event_proportion <- bind_rows(prop.table(table(dataset$y_loan_defaulter)),
-                                prop.table(table(data.train$y_loan_defaulter)),
-                                prop.table(table(data.test$y_loan_defaulter)))
-  
-  event_proportion$scope = ''
-  event_proportion$scope[1] = 'full dataset'
-  event_proportion$scope[2] = 'train dataset'
-  event_proportion$scope[3] = 'test dataset'
-  
-  event_proportion <- select(event_proportion, scope, everything())
-  
-  SplitDataset <-  list()
-  SplitDataset$data.train <- data.train
-  SplitDataset$data.test  <- data.test
-  SplitDataset$event.proportion <- event_proportion
-  
-  return(SplitDataset)
-}
+mydataset <- fgvr::createTestAndTrainSamples(dataset = you_dataset_name, yvar = "your_y_var", 
+                                             seed = 12345, percentage = 0.7)
 ```
 
 To make sure all the models uses the same datasets for Train and Testing we are saving the initial sampling to be reused across the models.
@@ -695,7 +467,7 @@ This will ensure consistency when comparing the models against each other.
 if (file.exists('./models/source_train_test_dataset.rds')) {
   source_train_test_dataset <- readRDS('./models/source_train_test_dataset.rds')
 } else {
-  source_train_test_dataset <- SplitTestTrainDataset(source_dataset)
+  source_train_test_dataset <- mydataset
   saveRDS(source_train_test_dataset, './models/source_train_test_dataset.rds')  
 }
 ```

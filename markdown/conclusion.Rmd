@@ -49,27 +49,17 @@ library(pROC)
 
 ```{r scripts_evaluation, include=FALSE}
 # loading required steps before performing the analysis
-source("./scripts/step_01_create_functions.R")
-source("./scripts/step_02_data_ingestion.R")
-source("./scripts/step_03_data_cleaning.R")
-source("./scripts/step_04_label_translation.R")
-source("./scripts/step_05_data_enhancement.R")
-source("./scripts/step_06_dataset_preparation.R")
-```
-
-```{r model_scripts_evaluation, include=FALSE}
-# loading required models before performing the analysis
-source('./scripts/model_01_logistic_regression.R')
-source('./scripts/model_02_decision_tree.R')
-source('./scripts/model_03_boosting.R')
-source('./scripts/model_04_random_forest.R')
+source("./src/util/auxiliary_functions.R")
+source("./src/datapreparation/step_02_data_ingestion.R")
+source("./src/datapreparation/step_03_data_cleaning.R")
+source("./src/datapreparation/step_04_label_translation.R")
+source("./src/datapreparation/step_05_data_enhancement.R")
+source("./src/datapreparation/step_06_dataset_preparation.R")
 ```
 
 # Objective
 
-The goal of this session is to compare the performance of all the models created during this exercise.
-
-Here we will expand the analysis done individually in each model to compare how it is performing against each other.
+Describe the objetive of this report.
 
 *******************************************************************************
 
@@ -80,57 +70,7 @@ Here we will expand the analysis done individually in each model to compare how 
 We will start this task by consolidating all the actual and predicted score for all models in a single data frame for the full, train and test datasets.
 
 ```{r get_scores_evaluation, echo=TRUE}
-## making preditions for each model and consilidating in a single data frame
-prob.full   <-  list()
-prob.train  <-  list()
-prob.test   <-  list()
-
-# getting predicted and actual values in the full dataset
-prob.full$logistic.actual         <- loan_dataset_logistic$y_loan_defaulter
-prob.full$logistic.predicted      <- predict(logistic.step, type = "response", 
-                                             newdata = loan_dataset_logistic)
-prob.full$decision.tree.actual    <- loan_dataset_DT$y_loan_defaulter
-prob.full$decision.tree.predicted <- predict(tree.prune, type = "prob", 
-                                             newdata = loan_dataset_DT)[, 2]
-prob.full$boosting.actual         <- loan_dataset_boost$y_loan_defaulter
-prob.full$boosting.predicted      <- predict.boosting(boost, 
-                                                      newdata = loan_dataset_boost)$prob[, 2]
-prob.full$random.forest.actual    <- loan_dataset_rf$y_loan_defaulter
-prob.full$random.forest.predicted <- predict(rf.full, type = "prob", 
-                                             newdata = loan_dataset_rf)[, 2]
-
-# getting predicted and actual values in the train dataset
-prob.train$logistic.actual         <- data.train_logistic$y_loan_defaulter
-prob.train$logistic.predicted      <- predict(logistic.step, type = "response", 
-                                              newdata = data.train_logistic)
-prob.train$decision.tree.actual    <- data.train_DT$y_loan_defaulter
-prob.train$decision.tree.predicted <- predict(tree.prune, type = "prob", 
-                                              newdata = data.train_DT)[, 2]
-prob.train$boosting.actual         <- data.train_boost$y_loan_defaulter
-prob.train$boosting.predicted      <- predict.boosting(boost, newdata = 
-                                                          data.train_boost)$prob[, 2]
-prob.train$random.forest.actual    <- data.train_rf$y_loan_defaulter
-prob.train$random.forest.predicted <- predict(rf.full, type = "prob", 
-                                              newdata = data.train_rf)[, 2]
-
-# getting predicted and actual values in the test dataset
-prob.test$logistic.actual         <- data.test_logistic$y_loan_defaulter
-prob.test$logistic.predicted      <- predict(logistic.step, type = "response", 
-                                             newdata = data.test_logistic)
-prob.test$decision.tree.actual    <- data.test_DT$y_loan_defaulter
-prob.test$decision.tree.predicted <- predict(tree.prune, type = "prob", 
-                                             newdata = data.test_DT)[, 2]
-prob.test$boosting.actual         <- data.test_boost$y_loan_defaulter
-prob.test$boosting.predicted      <- predict.boosting(boost, newdata = 
-                                                         data.test_boost)$prob[, 2]
-prob.test$random.forest.actual    <- data.test_rf$y_loan_defaulter
-prob.test$random.forest.predicted <- predict(rf.full, type = "prob", 
-                                             newdata = data.test_rf)[, 2]
-
-# converting lists into tibble
-prob.full   <- prob.full   %>% as_tibble()
-prob.train  <- prob.train  %>% as_tibble()
-prob.test   <- prob.test   %>% as_tibble()
+# your code goes here
 ```
 
 ## Getting performance measures for each model.
@@ -145,102 +85,24 @@ With the returned object from these functions we can plot the comparison between
 
 ```{r get_measures_evaluation, echo=TRUE, out.width= '100%'}
 ## getting cut off measures -----------------------------------------------------------------
-
-metricsByCutoff.test_log    <- modelMetrics(prob.test$logistic.actual, 
-                                            prob.test$logistic.predicted, 
-                                            plot_title = 'Logistic Regression')
-metricsByCutoff.test_DT     <- modelMetrics(prob.test$decision.tree.actual, 
-                                            prob.test$decision.tree.predicted, 
-                                            plot_title = 'Decision Tree')
-metricsByCutoff.test_boost  <- modelMetrics(prob.test$boosting.actual, 
-                                            prob.test$boosting.predicted, 
-                                            plot_title = 'Boosting')
-metricsByCutoff.test_rf     <- modelMetrics(prob.test$random.forest.actual, 
-                                            prob.test$random.forest.predicted, 
-                                            plot_title = 'Random Forest')
-
-cutoffs <- plotly::subplot(metricsByCutoff.test_log$Plot,
-                   metricsByCutoff.test_DT$Plot,
-                   metricsByCutoff.test_boost$Plot,
-                   metricsByCutoff.test_rf$Plot,
-                   nrows = 2) %>% hide_legend() %>% 
-                   layout(title="Comparing cut off measures of all models")
-
-cutoffs
-
+# your code goes here
 ```
 
 Having the best score cut off for each model we use **HMeasure()** function from **hmeasure** library to calculate the full set of metrics for classification methods.
 
 ```{r get_measures_full_evaluation, echo=TRUE, out.width= '100%', warning=FALSE}
-# logistic regression
-measures.logistic.train <- HMeasure(prob.train$logistic.actual, 
-                                    prob.train$logistic.predicted, 
-                                    threshold = metricsByCutoff.test_log$BestCut['Cut'])
-measures.logistic.test <- HMeasure(prob.test$logistic.actual, 
-                                   prob.test$logistic.predicted, 
-                                   threshold = metricsByCutoff.test_log$BestCut['Cut'])
-
-# decision tree
-measures.decision.tree.train <- HMeasure(prob.train$decision.tree.actual, 
-                                         prob.train$decision.tree.predicted, 
-                                         threshold = metricsByCutoff.test_DT$BestCut['Cut'])
-measures.decision.tree.test <- HMeasure(prob.test$decision.tree.actual, 
-                                        prob.test$decision.tree.predicted, 
-                                        threshold = metricsByCutoff.test_DT$BestCut['Cut'])
-
-# boosting
-measures.boosting.train <- HMeasure(prob.train$boosting.actual, 
-                                    prob.train$boosting.predicted, 
-                                    threshold = metricsByCutoff.test_boost$BestCut['Cut'])
-measures.boosting.test  <- HMeasure(prob.test$boosting.actual, 
-                                    prob.test$boosting.predicted, 
-                                    threshold = metricsByCutoff.test_boost$BestCut['Cut'])
-
-# random forest
-measures.random.forest.train <- HMeasure(prob.train$random.forest.actual, 
-                                         prob.train$random.forest.predicted, 
-                                         threshold = metricsByCutoff.test_rf$BestCut['Cut'])
-measures.random.forest.test  <- HMeasure(prob.test$random.forest.actual, 
-                                         prob.test$random.forest.predicted, 
-                                         threshold = metricsByCutoff.test_rf$BestCut['Cut'])
-
-# join measures in a single data frame
-measures <- t(bind_rows(measures.logistic.train$metrics,
-                        measures.logistic.test$metrics,
-                        measures.decision.tree.train$metrics,
-                        measures.decision.tree.test$metrics,
-                        measures.boosting.train$metrics,
-                        measures.boosting.test$metrics,
-                        measures.random.forest.train$metrics,
-                        measures.random.forest.test$metrics
-                        )) %>% as_tibble(., rownames = NA)
-
-colnames(measures) <- c('logistic - train', 'logistic - test',
-                        'decision.tree - train', 'decision.tree - test',
-                        'boosting - train', 'boosting - test',
-                        'random forest - train', 'random forest - test')
-
-measures$metric = rownames(measures)
-
-measures <- dplyr::select(measures, metric, everything())
+# your code goes here
 ```
 
 Below are the metrics on the train dataset:
 ```{r see_train_measures_evaluation, echo=TRUE, out.width= '100%'}
-kable(dplyr::select(measures, contains('train')), row.names = TRUE)
+# your code goes here
 ```
 
 Below are the metrics on the test dataset:
 ```{r see_score_measures_evaluation, echo=TRUE, out.width= '100%'}
-kable(dplyr::select(measures, contains('test')), row.names = TRUE)
+# your code goes here
 ```
-
-By looking at the metrics we can see that the models performed well in the train dataset (especially Boosting and Random Forest).
-
-But on the test dataset, the models are performing the same, with a clear advantage for Boosting and Random forest.
-
-This is going to be clearer when we look to the score distribution and the ROC curve of each model.
 
 ## Evaluating performance of each model
 
@@ -257,29 +119,7 @@ As discussed in the Decision Tree session this model is extremely limited for th
 We are using our custom function **Score_Histograms** described in the Function topic of Data Preparation session of this site.
 
 ```{r density_plots_evaluation, echo=TRUE, out.width= '100%'}
-density_plots <- ggarrange(Score_Histograms(prob.test, 
-                                            prob.test$logistic.predicted,
-                                            prob.test$logistic.actual,
-                                            'Logistic Regression'),
-                           Score_Histograms(prob.test, 
-                                            prob.test$decision.tree.predicted,
-                                            prob.test$decision.tree.actual,
-                                            'Decision Tree'),
-                           Score_Histograms(prob.test, 
-                                            prob.test$boosting.predicted,
-                                            prob.test$boosting.actual,
-                                            'Boosting'),
-                           Score_Histograms(prob.test, 
-                                            prob.test$random.forest.predicted,
-                                            prob.test$random.forest.actual,
-                                            'Random Forest'))
-
-density_plots <- annotate_figure(density_plots, 
-                                 top = text_grob("Density of All Models", 
-                                                 color = "black", face = "bold", 
-                                                 size = 14))
-
-density_plots
+# your code goes here
 ```
 
 ### Score Boxplots
@@ -293,29 +133,7 @@ Here we can see that Random Forest and Boosting have an edge on the classificati
 Our Decision Tree is right on the limit.
 
 ```{r boxplots_plots_evaluation, echo=TRUE, out.width= '100%'}
-boxplots <- ggarrange(Score_Boxplot(prob.test, 
-                        prob.test$logistic.predicted, 
-                        prob.test$logistic.actual,
-                        'Logistic Regression'),
-          Score_Boxplot(prob.test, 
-                        prob.test$decision.tree.predicted, 
-                        prob.test$decision.tree.actual,
-                        'Decision Tree'),
-          Score_Boxplot(prob.test, 
-                        prob.test$boosting.predicted, 
-                        prob.test$boosting.actual,
-                        'Boosting'),
-          Score_Boxplot(prob.test, 
-                        prob.test$random.forest.predicted, 
-                        prob.test$random.forest.actual,
-                        'Random Forest'))
-
-boxplots <- annotate_figure(boxplots, 
-                            top = text_grob("Score Boxplots of All Models", 
-                                            color = "black", face = "bold", 
-                                            size = 14))
-
-boxplots
+# your code goes here
 ```
 
 ### KS Plots
@@ -331,26 +149,7 @@ In this case we are comparing the cumulative distribution sample of Defaulters a
 The bigger the KS metric the better the model are to discriminate Defaulters to Non-Defaulters.
 
 ```{r KS_plots_evaluation, echo=TRUE, out.width= '100%'}
-KS_plots <- ggarrange(
-  KS_Plot(prob.test$logistic.predicted[prob.test$logistic.actual == 0],
-          prob.test$logistic.predicted[prob.test$logistic.actual == 1],
-          'Logistic Regression'),
-  KS_Plot(prob.test$decision.tree.predicted[prob.test$decision.tree.actual == 0],
-          prob.test$decision.tree.predicted[prob.test$decision.tree.actual == 1],
-          'Decision Tree'),
-  KS_Plot(prob.test$boosting.predicted[prob.test$boosting.actual == 0],
-          prob.test$boosting.predicted[prob.test$boosting.actual == 1],
-          'Boosting'),
-  KS_Plot(prob.test$random.forest.predicted[prob.test$random.forest.actual == 0],
-          prob.test$random.forest.predicted[prob.test$random.forest.actual == 1],
-          'Random Forest'))
-
-KS_plots <- annotate_figure(KS_plots,
-                            top = text_grob("KS Plots of All Models",
-                                            color = "black", face = "bold",
-                                            size = 14))
-
-KS_plots
+# your code goes here
 ```
 
 ### ROC Curve
@@ -364,9 +163,7 @@ We get this chart by plotting the **True Positive Rate (TPR)** against the **Fal
 The bigger the Area Under the Curve (AUC) the better the model is in classifying the observation.
 
 ```{r ROC_evaluation, echo=TRUE, out.width= '100%', warning=FALSE}
-ROC_test <- Plot_ROC(prob.test, smooth_opt = FALSE)
-
-print(ROC_test)
+# your code goes here
 ```
 
 ### Acurracy
@@ -378,29 +175,9 @@ We will use the custom functions described in Auxiliary metrics functions topic 
 Boosting is the best model we got in this exercise following very closely by Random Forest.
 
 ```{r accuracy_evaluation, echo=TRUE, out.width= '100%'}
-# logistic regression
-accuracy(score = prob.test$logistic.predicted, 
-         actual = prob.test$logistic.actual, 
-         threshold = metricsByCutoff.test_log[["BestCut"]][["Cut"]])
-
-# decision tree
-accuracy(score = prob.test$decision.tree.predicted, 
-         actual = prob.test$decision.tree.actual, 
-         threshold = metricsByCutoff.test_DT[["BestCut"]][["Cut"]])
-
-# boosting
-accuracy(score = prob.test$boosting.predicted, 
-         actual = prob.test$boosting.actual, 
-         threshold = metricsByCutoff.test_boost[["BestCut"]][["Cut"]])
-
-# random forest
-accuracy(score = prob.test$random.forest.predicted, 
-         actual = prob.test$random.forest.actual, 
-         threshold = metricsByCutoff.test_rf[["BestCut"]][["Cut"]])
+# your code goes here
 ```
 
 # Final considerations and project limitations
 
-Unfortunately, this is not a real dataset with really interest variables such as client income, credit rate, and so on.
-
-The dataset is also not big enough to deliver consistent results, we saw significant variation in the models depending on the split ratio, and the hyperparameters used in each model, but the dataset served very well for the intent of practicing the techniques and R programing skills learned in the class.
+Describe your final considerations and project limitations here.

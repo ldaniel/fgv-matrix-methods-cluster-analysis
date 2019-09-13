@@ -8,10 +8,10 @@ cat("\014")
 
 # getting the necessary directories to generate the website -------------------
 scriptsDirectoryPath  <- dirname(rstudioapi::getSourceEditorContext()$path)
-markdownDirectoryPath <- stringr::str_replace(scriptsDirectoryPath, "/scripts", "/markdown")
-docsDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/scripts", "/docs")
+markdownDirectoryPath <- stringr::str_replace(scriptsDirectoryPath, "/src/util", "/markdown")
+docsDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/src/util", "/docs")
 tempSiteDirecoryPath  <- paste(markdownDirectoryPath, "/_site", sep = "")
-rootDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/scripts", "")
+rootDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/src/util", "")
 
 # generating website from markdown files --------------------------------------
 setwd(markdownDirectoryPath)
