@@ -22,7 +22,7 @@ matriz_transicao <- matrix(c(0.00, 0.15, 0.20, 0.00, 0.00,
                              0.60, 0.45, 0.57, 0.00, 1.00), 
                            5, 5)
 
-# este passo não é necessário quando
+# este passo não é necessário quando se usa a library markovchain
 rownames(matriz_transicao) <- c("Site", "Hotpage", "CallCenter", "Venda", "Saida")
 colnames(matriz_transicao) <- c("Site", "Hotpage", "CallCenter", "Venda", "Saida")
 
@@ -41,7 +41,19 @@ transitionProbability(dtmc_ecommerce, "Site", "Venda")
 transitionProbability(dtmc_ecommerce, "Hotpage", "Venda")
 transitionProbability(dtmc_ecommerce, "CallCenter", "Venda")
 
+# estimando os estados sequentes no segundo passo
+initialState <- c(0, 1, 0, 0, 0)
+steps <- 2
+finalState <- initialState * (dtmc_ecommerce ^ steps)
+finalState
+
 # obtendo a estabilidade final da matriz
 steadyStates(dtmc_ecommerce)
+
+# estimando os estados sequentes no segundo passo
+initialState <- c(0.50, 0.20, 0.30, 0.00, 0.00)
+steps <- 1000
+finalState <- initialState * (dtmc_ecommerce ^ steps)
+finalState
 
 # createSequenceMatrix(dtmc_ecommerce)
