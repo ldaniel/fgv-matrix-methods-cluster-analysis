@@ -7,7 +7,6 @@ library(markovchain)
 # libraries for plot
 library(plotly)
 
-
 # loading other scripts do be used here ---------------------------------------
 source("./src/util/auxiliary_functions.R")
 
@@ -50,7 +49,7 @@ finalState
 # obtendo a estabilidade final da matriz
 steadyStates(dtmc_ecommerce)
 
-# estimando os estados sequentes no segundo passo
+# estimando o estado assintótico dado um estado inicial
 initialState <- c(0.50, 0.20, 0.30, 0.00, 0.00)
 steps <- 1000
 finalState <- initialState * (dtmc_ecommerce ^ steps)
