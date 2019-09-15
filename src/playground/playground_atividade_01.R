@@ -3,6 +3,7 @@
 # libraries for matrix methods
 #library(ggmcmc)
 library(markovchain)
+library(diagram)
 
 # libraries for plot
 library(plotly)
@@ -12,7 +13,7 @@ source("./src/util/auxiliary_functions.R")
 
 clearEnv()
 
-# Atividade individual 1 ------------------------------------------------------
+# atividade individual 1 ------------------------------------------------------
 # criando a matriz de transição do e-commerce
 matriz_transicao <- matrix(c(0.00, 0.15, 0.20, 0.00, 0.00,
                              0.10, 0.00, 0.10, 0.00, 0.00,
@@ -55,4 +56,22 @@ steps <- 1000
 finalState <- initialState * (dtmc_ecommerce ^ steps)
 finalState
 
-# createSequenceMatrix(dtmc_ecommerce)
+# plotando a matriz usando a biblioteca diagram -------------------------------
+# exemplo completo em https://rpubs.com/JanpuHou/326048
+
+plotmat(matriz_transicao)
+
+plotmat(matriz_transicao,
+        lwd = 1, 
+        box.lwd = 2, 
+        cex.txt = 0.8, 
+        box.size = 0.1, 
+        box.type = "circle", 
+        box.prop = 0.5,
+        box.col = "light blue",
+        arr.length = .1,
+        arr.width = .1,
+        self.cex = .6,
+        self.shifty = -.01,
+        self.shiftx = .14,
+        main = "Markov Chain para o e-commerce")
