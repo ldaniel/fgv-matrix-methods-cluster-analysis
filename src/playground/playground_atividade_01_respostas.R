@@ -86,5 +86,5 @@ initialState <- c(0.50, 0.20, 0.30, 0.00, 0.00)
 steps <- 10000
 finalState <- initialState * (dtmc_ecommerce ^ steps)
 
-cat(paste0("\nProbabilidade de conversão assintótica final:\n"))
+cat(paste0("\n\nProbabilidade de conversão assintótica final:\n"))
 print(finalState)
