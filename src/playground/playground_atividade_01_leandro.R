@@ -7,6 +7,7 @@ library(diagram)
 
 # libraries for plot
 library(plotly)
+library(circlize)
 
 # loading other scripts do be used here ---------------------------------------
 source("./src/util/auxiliary_functions.R")
@@ -75,3 +76,37 @@ plotmat(matriz_transicao,
         self.shifty = -.01,
         self.shiftx = .14,
         main = "Markov Chain para o e-commerce")
+
+# plotando a matriz usando a biblioteca circlize ------------------------------
+# https://jokergoo.github.io/circlize_book/book/the-chorddiagram-function.html
+
+# example 1
+chordDiagram(matriz_transicao)
+circos.clear()
+
+# example 2
+chordDiagram(matriz_transicao, order = c("Site", "Hotpage", "CallCenter", "Venda", "Saida"))
+circos.clear()
+
+# example 3
+circos.par(gap.after = c(rep(5, nrow(matriz_transicao)-1), 15, rep(5, ncol(matriz_transicao)-1), 15))
+chordDiagram(matriz_transicao)
+circos.clear()
+
+# example 4
+circos.par(start.degree = 90, clock.wise = FALSE)
+chordDiagram(matriz_transicao, big.gap = 5)
+circos.clear()
+
+# example 5
+grid.col = c(Site = "red", Hotpage = "green", CallCenter = "blue", Venda = "grey", Saida = "grey")
+chordDiagram(matriz_transicao, grid.col = grid.col)
+chordDiagram(t(matriz_transicao), grid.col = grid.col)
+circos.clear()
+
+# example 6
+par(mfrow = c(1, 3))
+chordDiagram(matriz_transicao, grid.col = grid.col, directional = 1)
+chordDiagram(matriz_transicao, grid.col = grid.col, directional = 1, diffHeight = uh(5, "mm"))
+chordDiagram(matriz_transicao, grid.col = grid.col, directional = -1)
+circos.clear()
