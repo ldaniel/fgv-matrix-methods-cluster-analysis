@@ -1,64 +1,12 @@
 # loading required libraries --------------------------------------------------
-# FGVR library for data science power-ups
-# library(fgvr)
+library(dplyr)
 
-# libraries for data prep
-# library(dplyr)
-# library(readr)
-# library(magrittr)
-# library(forcats)
-# library(lubridate)
-# library(stringr)
-# library(feather)
-# library(fastDummies)
-# library(reshape2)
-# library(knitr)
+# load data
 
-#libraries for plots
-# library(ggplot2)
-# library(ggthemes)
-# library(ggcorrplot)
-# library(ggpubr)
-# library(plotly)
+df <- readRDS('data/raw/skillset.rds')
 
-# libraries for data clean
-# library(VIM)
-# library(rms)
-# library(mctest)
+combinations <- t(combn(unique(df$skill), 2, simplify = TRUE)) %>% as_tibble
+combinations <- distinct(combinations, V1, V2)
 
-# libraries for modeling
-# library(caret)
-# library(gmodels)
-# library(MASS)
-# library(rpart)
-# library(rpart.plot)
-# library(adabag)
-# library(randomForest)
 
-# libraries for spatial data manipulation
-# library(spatialreg)
-# library(maps)
-# library(maptools)    
-# library(rgdal)     
-# library(sp)  
-# library(spdep)
-# library(bamlss)
-# library(gstat)
-# library(splancs)
-# library(spatstat)
-# library(pgirmess)
-# library(classInt)
-# library(spgwr)
 
-# libraries for measures
-# library(hmeasure)
-# library(pROC)
-
-# libraries for matrix methods
-#library(markovchain)
-
-# loading other scripts do be used here ---------------------------------------
-# source("./src/util/auxiliary_functions.R")
-
-# Playground ------------------------------------------------------------------
-# To-do
