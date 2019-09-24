@@ -72,7 +72,7 @@ plot_net_vis <- function(df, skills, n_relation) {
   edge_count <- group_by(edges, to) %>%
     summarise(value = log(n() + 1),
               title = paste('Receives', n(), 'connections', sep = ' ')) %>%
-    arrange(desc(value)) %>% as_tibble(.name_repair = TRUE)
+    arrange(desc(value)) %>% as_tibble()
   edge_count$to <- as.integer(edge_count$to)
   nodes <- left_join(nodes, edge_count, by = c('id' = 'to'))
   nodes$value <- ifelse(is.na(nodes$value), 1, nodes$value)
@@ -80,9 +80,10 @@ plot_net_vis <- function(df, skills, n_relation) {
     visNodes(physics = TRUE, fixed = FALSE, 
              shape = 'dot', borderWidthSelected = 3) %>% 
     visEdges(arrows = 'to', smooth = 'forceDirection', 
-             width = 1, shadow = TRUE)
+             width = 1, shadow = TRUE) %>% 
+    visOptions(highlightNearest = list(enabled = TRUE, degree = 1, algorithm = 'hierarchical')) %>% 
+    visIgraphLayout(layout = "layout_in_circle")
 }
-
 
 # plotting big data and data science related skills ----
 
@@ -95,3 +96,4 @@ skill_filter <- filter(skill_filter,
 
 # calling our custom function
 plot_net_vis(df_filter, skill_filter$skill, 10)
+  
