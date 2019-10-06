@@ -26,10 +26,7 @@ ATIBAIA$biling = as.factor(ATIBAIA$biling)
 ATIBAIA$estac  = as.factor(ATIBAIA$estac)
 ATIBAIA$ti     = as.factor(ATIBAIA$ti)
 
-# getting only vars meaningful as clustering drivers
-# filial não é porque é apenas o nome da filial
-# aval_global não é porque é uma composição das outras variáveis
-# idade também não é porque não é um fator caracterizador relevante
+# getting only meaningful vars as clustering drivers:
 ATIBAIA_drivers = ATIBAIA[, -c(1,2,9)]
 
 # transforming and scaling relevant vars to get the final dataset
@@ -49,7 +46,7 @@ ggcorrplot(cor(ATIBAIA_drivers_num_z),
            colors = c("tomato2", "white", "springgreen3"),
            title = "Correlation Matrix")
 
-# withinss abd betweenss according to its K ----------------------------------
+# withinss and betweenss according to its K ----------------------------------
 
 max_number_of_clusters <- nrow(ATIBAIA_drivers_num_z) - 1
 
