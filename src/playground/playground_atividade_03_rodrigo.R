@@ -6,9 +6,9 @@ library(fpc)
 library(factoextra)
 
 # reading the dataset
-ATIBAIA <- read_xlsx("data\\6-metodos-matriciais-e-analise-de-cluster\\ATIBAIA.xlsx", 
-                     sheet = "ATIBAIA", col_names = TRUE)
-
+ATIBAIA <- read_xlsx("./data/raw/ATIBAIA.xlsx", 
+                     sheet = "ATIBAIA", 
+                     col_names = TRUE)
 
 # preparing dataset for cluster algorithim
 ATIBAIA <- select(ATIBAIA, c(instal, biling, estac, train, ti, social))
