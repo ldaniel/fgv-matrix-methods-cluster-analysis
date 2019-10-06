@@ -49,7 +49,7 @@ ATIBAIA_drivers_num_z <- as.data.frame(lapply(ATIBAIA_drivers_num, scale))
 # calculating vars correlation
 cor(ATIBAIA_drivers_num_z)
 
-# withinss, betweenss and asw according to K ----------------------------------
+# withinss, betweenss and asw according to its K ----------------------------------
 
 max_number_of_clusters <- nrow(ATIBAIA_drivers_num_z) - 1
 
