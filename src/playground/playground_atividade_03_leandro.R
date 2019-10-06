@@ -45,3 +45,28 @@ ATIBAIA_drivers_num$estac = as.numeric(ATIBAIA_drivers_num$estac)
 ATIBAIA_drivers_num$ti = as.numeric(ATIBAIA_drivers_num$ti)
 
 ATIBAIA_drivers_num_z <- as.data.frame(lapply(ATIBAIA_drivers_num, scale))
+
+# calculating vars correlation
+cor(ATIBAIA_drivers_num_z)
+
+# withinss, betweenss and asw according to K ----------------------------------
+
+max_number_of_clusters <- nrow(ATIBAIA_drivers_num_z) - 1
+
+for (count in seq(1, max_number_of_clusters, by = 1)) {
+  
+  number_of_clusters <- as.numeric(count)
+  
+  # getting the K
+  KMeans_clustering_k3 <- kmeans(ATIBAIA_drivers_num_z,
+                                 number_of_clusters,
+                                 nstart = 20)
+  print(KMeans_clustering_k3)
+
+  # checking the withinss
+  KMeans_clustering_k3$withinss
+  KMeans_clustering_k3$tot.withinss
+
+  # checking the betweenss
+  KMeans_clustering_k3$betweenss
+}
