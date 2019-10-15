@@ -1,6 +1,6 @@
 ---
 title: "Métodos Matriciais e Análise de Clusters - Atividade Individual - I"
-output: word_document
+output: word_document 
 ---
 
 ```{r setup_exploration, include=FALSE}
