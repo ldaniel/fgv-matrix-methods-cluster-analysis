@@ -7,9 +7,10 @@ library(fpc)
 library(factoextra)
 library(cluster)
 library(ggcorrplot)
+library(reshape2)
 
 # Carregando e realizando preparação dos dados --------------------------------
-SANDUICHES <- read_xlsx("base_sanduiches.xlsx", sheet = "SANDUICHES", col_names = TRUE)
+SANDUICHES <- read_xlsx("data/raw/base_sanduiches.xlsx", sheet = "SANDUICHES", col_names = TRUE)
 
 # Mapear os tipos dos dados das colunas da tabela importada.
 sapply(SANDUICHES, class)
