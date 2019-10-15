@@ -135,6 +135,7 @@ get_transition_states <- function(initial_state, steps, mkv_chain) {
 
 ```{r atividade_a, echo=TRUE, out.width = '100%'}
 initial_state <- c(0, 1, 0, 0, 0)
+
 steps <- 2
 
 kable(get_transition_states(initial_state, steps, mkv_chain)['transition_states'])
