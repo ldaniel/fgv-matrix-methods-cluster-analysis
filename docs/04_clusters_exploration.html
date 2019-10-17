@@ -12,7 +12,7 @@
 
 
 
-<title>The exploration’s report</title>
+<title>Exploração dos Clusters</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,6 +21,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -357,21 +359,24 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-hand-holding-usd"></span>
      
-    Business Case
+    Cenário Proposto
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="01_about_the_data.html">About the Data</a>
+      <a href="01_about_the_data.html">Sobre os dados</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Initial Analysis</li>
+    <li class="dropdown-header">Análise Inicial</li>
     <li>
-      <a href="02_data_preparation.html">Data Preparation</a>
+      <a href="02_data_preparation.html">Preparação dos Dados</a>
     </li>
     <li>
-      <a href="03_exploration_report.html">Data Exploration</a>
+      <a href="03_data_exploration.html">Exploração dos Dados</a>
+    </li>
+    <li>
+      <a href="04_clusters_exploration.html">Exploração dos Clusters</a>
     </li>
   </ul>
 </li>
@@ -379,16 +384,16 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-file-invoice-dollar"></span>
      
-    Final Report
+    Relatório Final
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="conclusion.html">Conclusion</a>
+      <a href="conclusion.html">Conclusão</a>
     </li>
     <li>
-      <a href="references.html">References</a>
+      <a href="references.html">Referências</a>
     </li>
   </ul>
 </li>
@@ -404,39 +409,33 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">The exploration’s report</h1>
-<h4 class="date">August, 2019</h4>
+<h1 class="title toc-ignore">Exploração dos Clusters</h1>
+<h4 class="date">Outubro de 2019</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#exploration-1"><span class="toc-section-number">1</span> Exploration 1</a></li>
-<li><a href="#exploration-2"><span class="toc-section-number">2</span> Exploration 2</a></li>
-<li><a href="#exploration-3"><span class="toc-section-number">3</span> Exploration 3</a></li>
-<li><a href="#exploration-n"><span class="toc-section-number">4</span> Exploration n</a></li>
+<li><a href="#carregando-a-base-de-dados-processada"><span class="toc-section-number">1</span> Carregando a base de dados processada</a></li>
+<li><a href="#tópico"><span class="toc-section-number">2</span> Tópico</a><ul>
+<li><a href="#sub-tópico"><span class="toc-section-number">2.1</span> Sub-tópico</a></li>
+</ul></li>
 </ul>
 </div>
 
-<div id="exploration-1" class="section level1">
-<h1><span class="header-section-number">1</span> Exploration 1</h1>
-<p>Describe your exploration 1 here, including some plots, tables or any resource used.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># your code with the exploration 1 goes here</span></a></code></pre></div>
+<div id="carregando-a-base-de-dados-processada" class="section level1">
+<h1><span class="header-section-number">1</span> Carregando a base de dados processada</h1>
+<p>Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de <strong>Data Preparation</strong> (preparação de dados).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a></code></pre></div>
+<hr />
 </div>
-<div id="exploration-2" class="section level1">
-<h1><span class="header-section-number">2</span> Exploration 2</h1>
-<p>Describe your exploration 2 here, including some plots, tables or any resource used.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># your code with the exploration 2 goes here</span></a></code></pre></div>
+<div id="tópico" class="section level1">
+<h1><span class="header-section-number">2</span> Tópico</h1>
+<div id="sub-tópico" class="section level2">
+<h2><span class="header-section-number">2.1</span> Sub-tópico</h2>
+<p>Descrever.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
 </div>
-<div id="exploration-3" class="section level1">
-<h1><span class="header-section-number">3</span> Exploration 3</h1>
-<p>Describe your exploration 3 here, including some plots, tables or any resource used.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># your code with the exploration 3 goes here</span></a></code></pre></div>
-</div>
-<div id="exploration-n" class="section level1">
-<h1><span class="header-section-number">4</span> Exploration n</h1>
-<p>Describe your exploration n here, including some plots, tables or any resource used.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># your code with the exploration n goes here</span></a></code></pre></div>
 </div>
 
 
