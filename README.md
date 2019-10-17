@@ -7,7 +7,8 @@ In this project, we developed a set of works to go further in Matrix Methods and
 This website intends to present the work analysis for the *"Métodos Matriciais e Análise de Clusters"* class assignment.
 
 ```
-Trinta entrevistas foram feitas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente) às seguintes afirmações:
+Trinta entrevistas foram feitas, pedindo-se para dar uma nota de 
+1 (discordo totalmente) a 5 (concordo totalmente) às seguintes afirmações:
 
 1. Sempre vou a casamentos quando sou convidado.
 2. A parte mais interessante dos casamentos são os doces.
@@ -18,16 +19,22 @@ Trinta entrevistas foram feitas, pedindo-se para dar uma nota de 1 (discordo tot
 7. Cerimônias de casamento longas me cansam.
 8. Acho que casamento no civil não é casamento de verdade.
 
-Os resultados estão na tabela em arquivo Excel localizado na mesma pasta deste arquivo, juntamente com as informações de sexo e idade dos entrevistados.
+Os resultados estão na tabela em arquivo Excel localizado na mesma pasta
+deste arquivo, juntamente com as informações de sexo e idade dos entrevistados.
 
-Responda as seguintes questões, justificando sua resposta com base em fatos, dados, gráficos etc:
+Responda as seguintes questões, justificando sua resposta com base em fatos, 
+dados, gráficos etc:
 
-a. Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?
-b. Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?
+a. Houve concentrações de respostas em categorias únicas ou houve 
+boa diversidade entre os respondentes?
+b. Houve correlação entre as variáveis assinaladas em vermelho? Como isso 
+afeta a Cluster Analysis?
 c. É necessário padronizar as variáveis?
-d. Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc). 
+d. Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas 
+em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc). 
 e. Quantos grupos foram obtidos? 
-f. Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
+f. Interprete os grupos assim formados, usando somente as variáveis 
+assinaladas em vermelho.
 g. Verifique se sexo ou idade discriminam bem os grupos.
 h. A aplicação do método K-Means muda a composição dos grupos?
 ```
