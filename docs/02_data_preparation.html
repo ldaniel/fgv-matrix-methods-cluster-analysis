@@ -414,7 +414,11 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#utilizando-uma-abordagem-dividida-em-passos"><span class="toc-section-number">1</span> Utilizando uma abordagem dividida em passos</a></li>
+<li><a href="#utilizando-uma-abordagem-dividida-em-passos"><span class="toc-section-number">1</span> Utilizando uma abordagem dividida em passos</a><ul>
+<li><a href="#step-01-configuração-do-ambiente"><span class="toc-section-number">1.1</span> Step 01: Configuração do ambiente</a></li>
+<li><a href="#step-02-ingestão-dos-dados"><span class="toc-section-number">1.2</span> Step 02: Ingestão dos dados</a></li>
+<li><a href="#step-03-tratamento-dos-dados"><span class="toc-section-number">1.3</span> Step 03: Tratamento dos dados</a></li>
+</ul></li>
 <li><a href="#funções-criadas"><span class="toc-section-number">2</span> Funções criadas</a><ul>
 <li><a href="#funções-gerais"><span class="toc-section-number">2.1</span> Funções gerais</a></li>
 <li><a href="#funções-de-análise-de-clusters"><span class="toc-section-number">2.2</span> Funções de análise de clusters</a></li>
@@ -424,35 +428,48 @@ $(document).ready(function () {
 
 <div id="utilizando-uma-abordagem-dividida-em-passos" class="section level1">
 <h1><span class="header-section-number">1</span> Utilizando uma abordagem dividida em passos</h1>
-<p>Antes de iniciar a análise para o projeto Matrix-Methods-Cluster-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos a seguir:</p>
-<ul>
-<li><strong>Step 01</strong>: Configuração do ambiente;</li>
-<li><strong>Step 02</strong>: Ingestão dos dados;</li>
-<li><strong>Step 03</strong>: Tratamento dos dados;</li>
-<li><strong>Step 04</strong>: Enriquecimento dos dados;</li>
-<li><strong>Step 05</strong>: Preparação dos datasets.</li>
-</ul>
+<p>Antes de iniciar a análise para o projeto Matrix-Methods-Cluster-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos nos tópicos a seguir.</p>
+<p>O processo preparação de dados, em geral, inclui etapas de extração (retirar os dados de sua localização atual), tranformação (limpar e normalizar os dados) e carga (colocar os dados em um banco de dados onde eles podem ser analisados).</p>
+<div id="step-01-configuração-do-ambiente" class="section level2">
+<h2><span class="header-section-number">1.1</span> Step 01: Configuração do ambiente</h2>
+<p>Passo que executa configurações iniciais para execução dos passos seguintes.</p>
+</div>
+<div id="step-02-ingestão-dos-dados" class="section level2">
+<h2><span class="header-section-number">1.2</span> Step 02: Ingestão dos dados</h2>
+<p>A etapa de ingestão de dados - data ingestion - é responsável por carregas os dados da fonte de dados de origem.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_02_data_ingestion.R&quot;</span>)</a></code></pre></div>
+</div>
+<div id="step-03-tratamento-dos-dados" class="section level2">
+<h2><span class="header-section-number">1.3</span> Step 03: Tratamento dos dados</h2>
+<p>O objetivo desta etapa é analisar valores ausentes (missing values) e outras condições estranhas.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_03_data_cleaning.R&quot;</span>)</a></code></pre></div>
+<p>##Step 04: Enriquecimento dos dados</p>
+<p>Esta etapa visa melhorar a análise adicionando informações auxiliares. O aprimoramento de dados tem tudo a ver com garantir que todos os dados que chegam às áreas de negócio sejam analisados com um olhar crítico e sejam filtrados para maximizar seu valor.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_04_data_enhancement.R&quot;</span>)</a></code></pre></div>
+<p>##Step 05: Preparação dos datasets</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_05_dataset_preparation.R&quot;</span>)</a></code></pre></div>
 <hr />
+</div>
 </div>
 <div id="funções-criadas" class="section level1">
 <h1><span class="header-section-number">2</span> Funções criadas</h1>
 <p>Para realização deste trabalho, algumas funções foram criadas para otimizar atividades e procedimentos repetitivos. Estas funções também podem, futuramente, serem reusadas em outros projetos ou mesmo serem adicionadas uma library R.</p>
 <div id="funções-gerais" class="section level2">
 <h2><span class="header-section-number">2.1</span> Funções gerais</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># clear environment, memory, console screen and plots</span></a>
-<a class="sourceLine" id="cb1-2" title="2">ClearEnvironment &lt;-<span class="st"> </span><span class="cf">function</span> () {</a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="kw">invisible</span>(<span class="kw">gc</span>())</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\014</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6">  </a>
-<a class="sourceLine" id="cb1-7" title="7">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">is.null</span>(<span class="kw">dev.list</span>()))</a>
-<a class="sourceLine" id="cb1-8" title="8">    <span class="kw">dev.off</span>()</a>
-<a class="sourceLine" id="cb1-9" title="9">}</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># clear environment, memory, console screen and plots</span></a>
+<a class="sourceLine" id="cb5-2" title="2">ClearEnvironment &lt;-<span class="st"> </span><span class="cf">function</span> () {</a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())</a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="kw">invisible</span>(<span class="kw">gc</span>())</a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\014</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6">  </a>
+<a class="sourceLine" id="cb5-7" title="7">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">is.null</span>(<span class="kw">dev.list</span>()))</a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="kw">dev.off</span>()</a>
+<a class="sourceLine" id="cb5-9" title="9">}</a></code></pre></div>
 </div>
 <div id="funções-de-análise-de-clusters" class="section level2">
 <h2><span class="header-section-number">2.2</span> Funções de análise de clusters</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
 </div>
 </div>
 
