@@ -10,6 +10,10 @@ knitr::opts_knit$set(root.dir = "./")
 
 options(Encoding="UTF-8")
 
+# markdown libraries
+library(rmarkdown)
+library(knitr)
+
 # data exploration libraries
 library(tibble)
 library(dplyr)
@@ -29,6 +33,16 @@ source("../src/util/auxiliary_functions.R")
 # Análise inicial
 
 Texto.
+
+## Carregando a base de dados processada
+
+Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de **Data Preparation** (preparação de dados). 
+
+```{r data_load, echo=TRUE}
+target_data <- readRDS('../data/processed/target_dataset.rds')
+
+summary(target_data)
+```
 
 ## Exploração 1
 
