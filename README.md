@@ -24,12 +24,12 @@ Responda as seguintes questões, justificando sua resposta com base em fatos, da
 
 a. Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?
 b. Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?
-c.	É necessário padronizar as variáveis?
-d.	Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc). 
-e.	Quantos grupos foram obtidos? 
-f.	Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
-g.	Verifique se sexo ou idade discriminam bem os grupos.
-h.	A aplicação do método K-Means muda a composição dos grupos?
+c. É necessário padronizar as variáveis?
+d. Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc). 
+e. Quantos grupos foram obtidos? 
+f. Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
+g. Verifique se sexo ou idade discriminam bem os grupos.
+h. A aplicação do método K-Means muda a composição dos grupos?
 ```
 See the final website report at: [https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis).
 
