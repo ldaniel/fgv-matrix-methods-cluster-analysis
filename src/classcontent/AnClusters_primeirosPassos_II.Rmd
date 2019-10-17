@@ -1,0 +1,87 @@
+---
+title: "Exemplos de Análise de Clusters II"
+output: html_notebook
+---
+
+#Preparação
+
+```{r}
+# Designar work directory.
+setwd("P:/IDE/Rodrigo_Togneri/T1 Berrini - Met Matr e An Clusters/04 An Clusters/02 Alg. Bas. em Densidade e Distribuição/")
+getwd()
+# Importar o pacote factoextra, que contém tanto a amostra de dados multishape quanto a função fviz_cluster para visualização de clusters.
+library(factoextra)
+# Importar a amostra de dados multishape (didática).
+data("multishapes")
+df <- multishapes[, 1:2]
+# Os dados já estão com escala padronizada, de modo que não é necessário fazer a padronização.
+```
+
+#Inadequação do K-Means para estes Dados
+
+```{r}
+# Inicialmente, testa-se o algoritmo K-Means, e verifica-se a sua inadequação para os dados em questão, pois alguns dos clusters nos dados tem formatos não-esféricos e não-convexos.
+set.seed(123)
+KMeans_clustering_k5 <- kmeans(df, 5, nstart = 25)
+fviz_cluster(KMeans_clustering_k5, df, frame = FALSE, geom = "point")
+```
+
+#An. de Clusters POR DENSIDADE: DBSCAN
+
+```{r}
+# Os principais pacotes para processar DBSCAN são fpc (função dbscan()) e dbscan (função dbscan()). Aqui usaremos o pacote fpc.
+#install.packages("fpc")
+library(fpc)
+#install.packages("dbscan")
+library(dbscan)
+# Também há o pacote factoextra, do qual utilizaremos funções de visualização de clusters, como a fviz_cluster.
+#install.packages("factoextra")
+library(factoextra)
+```
+
+```{r}
+# Documentação da função dbscan() do pacote fpc.
+?fpc::dbscan()
+```
+
+```{r}
+# Executar o algoritmo DBSCAN.
+set.seed(123)
+db <- fpc::dbscan(df, eps = 0.15, MinPts = 5)
+# Imprimir os resultados do DBSCAN.
+plot(db, df, main = "DBSCAN", frame = FALSE)
+# Repare que o DBSCAN conseguiu encontrar os clusters adequadamente. Os pontos em preto são os outliers.
+```
+
+```{r}
+# Outra maneira de visualizar é através da função fviz_cluster() do pacote factoextra.
+library("factoextra")
+fviz_cluster(db, df, stand = FALSE, frame = FALSE, geom = "point")
+```
+
+```{r}
+# Imprimir o total de observações por cluster, divididos entre observações core (seed) e de borda (border). A indexação 0 indica os outliers, e as indicações de 1 a 5 indicam clusters de fato.
+print(db)
+```
+
+```{r}
+# Acessar o cluster de cada observação.
+db$cluster
+```
+
+```{r}
+# ESCOLHA DO MELHOR EPSILON. O melhor valor de epsilon pode ser ecolhido segundo a regra do cotovelo (elbow) da distância média de kNN. Para k = 5, têm-se o resultado abaixo. Mas pode-se testar vários valores de k. Em geral ocorre uma convergência de pontos classificados para uma ampla faixa de k, e, em geral, k=5 é uma boa proxy.
+dbscan::kNNdistplot(df, k =  5)
+abline(h = 0.15, lty = 2)
+```
+
+```{r}
+# PREDIÇÃO DBSCAN. A função predict.dbscan, do pacote fpc pode ser usada para predizer os clusters de um dataset novo, com base em um objeto dbscan já treinado.
+?predict.dbscan
+```
+
+
+
+
+
+

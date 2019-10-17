@@ -1,0 +1,148 @@
+---
+title: "Gabarito Atividade Individual 3"
+output: html_notebook
+---
+
+#EXERCÍCIO - Utilize a base de dados ATIBAIA e os procedimentos de K-Means descritos no arquivo AnClusters_primeirosPassos.rmd, e: 
+
+##a) Crie um programa que, além de realizar o pré-processamento de dados corretamente, forneça os gráficos de withinss, betweenss e asw variáveis segundo K.
+
+Base de dados:
+
+```{r}
+# Designar work directory.
+library(fpc)
+library(factoextra)
+library(cluster)
+
+setwd("D:/OneDrive/FGV/04_Modulos/07 - Metodos Matriciais e Analise de Clusters/Material/05 Atividades Individuais/Atividade Individual III")
+getwd()
+# Ler os dados do arquivo Excel no work directory.
+#install.packages("readxl")
+library(readxl)
+ATIBAIA <- read_xlsx("ATIBAIA.xlsx", sheet = "ATIBAIA", col_names = TRUE)
+```
+
+Estudo e avaliação dos dados:
+
+```{r}
+# Mapear os tipos dos dados das colunas da tabela importada.
+sapply(ATIBAIA, class)
+# Sumarizar as características univariadas dos dados da tabela importada.
+summary(ATIBAIA)
+# Repare que as variáveis biling, estac e ti estão sendo erroneamente sendo tratadas como numéricas, quando na verdade são fatores.
+```
+
+```{r}
+# Mudar o tipo das variáveis biling, estac e ti para factor.
+ATIBAIA$biling=as.factor(ATIBAIA$biling)
+ATIBAIA$estac=as.factor(ATIBAIA$estac)
+ATIBAIA$ti=as.factor(ATIBAIA$ti)
+# Refazer a sumarização das características univariadas dos dados da tabela importada, agora com os tipos das colunas corrigidos.
+summary(ATIBAIA)
+```
+
+Preparação dos dados:
+
+```{r}
+# Selecionar somente as variáveis drivers de clustering (filial não é porque é apenas o nome da filial, aval_global não é porque é uma composição das outras variáveis, e idade também não é porque não é um fator caracterizador relevante).
+ATIBAIA_drivers = ATIBAIA[ , -c(1,2,9)]
+```
+
+```{r}
+# Preparando dados, transformando tudo para tipo numérico e colocando as colunas em escala.
+ATIBAIA_drivers_num <- ATIBAIA_drivers
+ATIBAIA_drivers_num$biling = as.numeric(ATIBAIA_drivers_num$biling)
+ATIBAIA_drivers_num$estac = as.numeric(ATIBAIA_drivers_num$estac)
+ATIBAIA_drivers_num$ti = as.numeric(ATIBAIA_drivers_num$ti)
+
+ATIBAIA_drivers_num_z <- as.data.frame(lapply(ATIBAIA_drivers_num, scale))
+```
+
+```{r}
+# Calculando a correlação entre as variáveis. Deve-se tomar o cuidado de que não hajam grandes correlações entre as variáveis, pois estaríamos considerando a mesma informação repetidas vezes, aumentando o "peso" daquela informação na formação dos clusters.
+cor(ATIBAIA_drivers_num_z)
+# Ok, não existem grandes correlações.
+```
+
+```{r}
+# Criar um dataset vazio para receber os resultados dos testes dos vário valores de k.
+df <- data.frame(k=integer(), 
+                 tot.withinss=double(),
+                 betweenss=double())
+# A função mais utilizada para operacionalizar o K-Means é a kmeans, nativa do R vinculada à biblioteca stats, também nativa do R. Por ser uma biblioteca nativa, não há necessidade de carregar a biblioteca pois a mesma já é naturalmete carregada.
+for(k in 1:(nrow(ATIBAIA_drivers_num_z)-1)) {
+  KMeans_clustering <- kmeans(ATIBAIA_drivers_num_z, k, nstart = 20)
+  tot.withinss <- KMeans_clustering$tot.withinss
+  betweenss <- KMeans_clustering$betweenss
+  vector <- c(k, tot.withinss, betweenss)
+  df <- rbind(df, vector)
+}
+names(df) <- c("k", "tot.withinss", "betweenss")
+# Visualizar as métricas de desempenho por quantidade de clusters.
+k <- df$k
+tot.withinss <- df$tot.withinss
+betweenss <- df$betweenss
+par(pch=22, col="red")
+par(mfrow=c(2,1))
+plot(k, tot.withinss, type="n", main="tot.withinss")
+lines(k, tot.withinss)
+plot(k, betweenss, type="n", main="betweenss")
+lines(k, betweenss)
+```
+
+```{r}
+# Criar um dataset vazio para receber os resultados dos testes dos vário valores de k.
+df2 <- data.frame(k=integer(), 
+                 average.within=double(),
+                 average.between=double(),
+                 tot.withinss=double(),
+                 avg.silwidth=double())
+# Calcular a matriz de distâncias que é input para a função cluster.stats.
+ATIBAIA_drivers_num_z_dist <- dist(ATIBAIA_drivers_num_z, method = "euclidean")
+# A função mais utilizada para operacionalizar o K-Means é a kmeans, nativa do R vinculada à biblioteca stats, também nativa do R. Por ser uma biblioteca nativa, não há necessidade de carregar a biblioteca pois a mesma já é naturalmete carregada.
+for(k in 2:(nrow(ATIBAIA_drivers_num_z)-1)) {
+  KMeans_clustering <- kmeans(ATIBAIA_drivers_num_z, k, nstart = 20)
+  stats <- cluster.stats(ATIBAIA_drivers_num_z_dist, KMeans_clustering$cluster)
+  average.within <- stats$average.within
+  average.between <- stats$average.between
+  tot.withinss <- stats$within.cluster.ss
+  avg.silwidth <- stats$avg.silwidth
+  vector <- c(k, average.within, average.between, tot.withinss, avg.silwidth)
+  df2 <- rbind(df2, vector)
+}
+names(df2) <- c("k", "average.within", "average.between", "tot.withinss", "avg.silwidth")
+# Visualizar as métricas de desempenho por quantidade de clusters.
+k <- df2$k
+average.within <- df2$average.within
+average.between <- df2$average.between
+tot.withinss <- df2$tot.withinss
+avg.silwidth <- df2$avg.silwidth
+par(pch=22, col="red")
+par(mfrow=c(2,1))
+#plot(k, average.within, type="n", main="average.within")
+#lines(k, average.within)
+#plot(k, average.between, type="n", main="average.between")
+#lines(k, average.between)
+plot(k, tot.withinss, type="n", main="tot.withinss")
+lines(k, tot.withinss)
+plot(k, avg.silwidth, type="n", main="avg.silwidth")
+lines(k, avg.silwidth)
+```
+
+##b) Com base no resultado de a), faça a escolha do melhor K e justifique sua escolha.
+
+Segundo as métricas (interseção de cotovelos de tot.withinss e betweenss, e dos mais altos valores de asw), entre 10 e 17 clusters seria uma escolha razoável. No entanto, como a base de dados é pequena (apenas 30 observações) e para favorecer a simplicidade, adotaremos k = 10.
+
+```{r}
+# A função mais utilizada para operacionalizar o K-Means é a kmeans, nativa do R vinculada à biblioteca stats, também nativa do R. Por ser uma biblioteca nativa, não há necessidade de carregar a biblioteca pois a mesma já é naturalmete carregada.
+KMeans_clustering_k10 <- kmeans(ATIBAIA_drivers_num_z, 10, nstart = 20)
+#KMeans_clustering_k10
+#install.packages("factoextra")
+library(factoextra)
+fviz_cluster(list(data = ATIBAIA_drivers_num_z, cluster = KMeans_clustering_k10$cluster),  show.clust.cent = T)
+```
+
+##c) As métricas coletadas indicam que os clusters encontrados são adequados? Justifique.
+
+A única das métricas coletadas que nos permite dizer se os clusters são adequados é a asw. A asw apresenta valor máximo de 0,20, considerando que os clusters são ainda inadequados.

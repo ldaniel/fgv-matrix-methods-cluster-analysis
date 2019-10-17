@@ -1,0 +1,210 @@
+---
+title: 'Cadeias de Markov de Tempo Discreto (DTMC: Discrete Time Markov Chain)'
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{r}
+# Limpando o console.
+cat("\014") 
+# Limpando o Global Environment.
+rm(list = ls())
+```
+
+# Carregando o pacote markovchain.
+
+```{r}
+#install.packages("markovchain")
+library(markovchain)
+```
+
+# Para o caso de transição de canais de um e-commerce.
+
+Definindo a matriz de transição.
+
+```{r}
+tm <- matrix(c(0.00,0.10,0.20,0.70,
+               0.20,0.00,0.30,0.50,
+               0.00,0.00,1.00,0.00,
+               0.00,0.00,0.00,1.00),
+              nrow = 4,
+              byrow = TRUE) 
+tm
+```
+
+Criando a DTMC.
+
+```{r}
+dtmc <- new("markovchain",transitionMatrix=tm,
+states=c("Canal_A","Canal_B","Venda","Saida"),
+name="MarkovChain para o e-commerce") 
+dtmc
+```
+
+Estima-se o estados sequentes pelo número de passos para quem inicia em cada canal.
+
+```{r}
+initialState<-c(1,0,0,0)
+steps<-1
+finalState<-initialState*(dtmc^steps) #using power operator
+finalState
+```
+
+```{r}
+initialState<-c(1,0,0,0)
+steps<-2
+finalState<-initialState*(dtmc^steps) #using power operator
+finalState
+```
+
+Estima-se o estado assintótico para quem começa em um determinado canal.
+
+```{r}
+initialState<-c(1,0,0,0)
+steps<-1000
+finalState<-initialState*(dtmc^steps) #using power operator
+finalState
+```
+
+Estima-se o estado assintótico para uma determinada distribuição de probabilidade de início.
+
+```{r}
+initialState<-c(0.70,0.30,0.00,0.00)
+steps<-1000
+finalState<-initialState*(dtmc^steps) #using power operator
+finalState
+```
+
+Assim como é possível conhecer os atratores de forma.
+
+```{r}
+steadyStates(dtmc)
+```
+
+É possível visualizar a Cadeia de Markov através do pacote igraph.
+
+```{r}
+plot(dtmc)
+```
+
+
+# Para o caso de estados climáticos.
+
+```{r}
+# Limpando o console.
+cat("\014") 
+# Limpando o Global Environment.
+rm(list = ls())
+```
+
+Definindo a matriz de transição.
+
+```{r}
+tm <- matrix(c(0.50, 0.25,0.25,0.50,0.00, 0.50,0.25,0.25,0.50),nrow = 3,
+byrow = TRUE) 
+tm
+```
+
+Criando a DTMC.
+
+```{r}
+dtmc <- new("markovchain",transitionMatrix=tm,
+states=c("Rain","Nice","Snow"),
+name="MarkovChain para o clima") 
+dtmc
+```
+
+Alternativa para criar DTMC.
+
+```{r}
+dtmc2<-as(tm, "markovchain")
+states(dtmc2) #note default names assigned to states.
+dtmc2
+```
+
+É possível visualizar a Cadeia de Markov através do pacote igraph.
+
+```{r}
+plot(dtmc)
+```
+
+
+# Exploração de mais funcionalidades do pacote markovchain.
+
+É possível acessar as probabilidades condicionais da matriz de transição por dois métodos.
+
+Método 1:
+
+```{r}
+dtmc[2,3]
+```
+
+Método 2:
+
+```{r}
+transitionProbability(dtmc,"Nice","Snow")
+```
+
+Para acessar toda uma linha de probabilidade condicional:
+
+```{r}
+conditionalDistribution(dtmc,"Nice")
+```
+
+É possível ainda simular a distribuição de probabilidade depois de n passos.
+
+```{r}
+initialState<-c(0,1,0)
+steps<-2
+finalState<-initialState*(dtmc^steps) #using power operator
+finalState
+```
+
+Assim como é possível conhecer as distribuições de estabilidade assintótica.
+
+```{r}
+steadyStates(dtmc)
+```
+
+# Estimação e simulação.
+
+```{r}
+# Limpando o console.
+cat("\014") 
+# Limpando o Global Environment.
+rm(list = ls())
+```
+
+O pacote permite:
+
++ A criação de uma matriz de transição a partir de dados de sequencia de estados.
+
++ A criação de uma sequencia simulada de estados a partir de uma matriz de transição.
+
+Usando os dados de volume de chuva da biblioteca do próprio pacote.
+
+```{r}
+data(rain)
+mysequence<-rain$rain
+createSequenceMatrix(mysequence)
+```
+
+Encontrando a matriz de transição, com intervalos de confiança, a partir dos dados (por MLE - Maximum Likelihood Estimation).
+
+```{r}
+myFit<-markovchainFit(data=mysequence,confidencelevel = .9,method = "mle")
+myFit
+```
+
+```{r}
+alofiMc<-myFit$estimate
+alofiMc
+```
+
+Criação de uma sequencia simulada de estados.
+
+```{r}
+rmarkovchain(n = 365, object = alofiMc, t0 = "6+")
+```
+
