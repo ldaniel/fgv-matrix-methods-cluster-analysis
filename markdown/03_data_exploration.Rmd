@@ -1,0 +1,37 @@
+---
+title: "Exploração dos Dados"
+date: "Outubro de 2019"
+---
+
+```{r setup_exploration, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.pos =  "h")
+knitr::opts_knit$set(root.dir = "./")
+
+options(Encoding="UTF-8")
+
+# data exploration libraries
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+
+# plotting libraries
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+
+# loading required scripts
+source("../src/util/auxiliary_functions.R")
+```
+
+# Análise inicial
+
+Texto.
+
+## Exploração 1
+
+```{r exploration_target_1, echo=FALSE, out.width = '100%'}
+# to-do
+```
