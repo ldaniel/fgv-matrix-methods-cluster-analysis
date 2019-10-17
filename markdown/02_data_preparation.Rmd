@@ -19,21 +19,47 @@ library(lubridate)
 
 # loading required scripts
 source("../src/util/auxiliary_functions.R")
-source("../src/datapreparation/step_02_data_ingestion.R")
-source("../src/datapreparation/step_03_data_cleaning.R")
-source("../src/datapreparation/step_04_data_enhancement.R")
-source("../src/datapreparation/step_05_dataset_preparation.R")
 ```
 
 # Utilizando uma abordagem dividida em passos
 
-Antes de iniciar a análise para o projeto Matrix-Methods-Cluster-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos a seguir:
+Antes de iniciar a análise para o projeto Matrix-Methods-Cluster-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos nos tópicos a seguir.
 
-- **Step 01**: Configuração do ambiente;
-- **Step 02**: Ingestão dos dados;
-- **Step 03**: Tratamento dos dados;
-- **Step 04**: Enriquecimento dos dados;
-- **Step 05**: Preparação dos datasets.
+O processo preparação de dados, em geral, inclui etapas de extração (retirar os dados de sua localização atual), tranformação (limpar e normalizar os dados) e carga (colocar os dados em um banco de dados onde eles podem ser analisados).
+
+## Step 01: Configuração do ambiente
+
+Passo que executa configurações iniciais para execução dos passos seguintes.
+
+## Step 02: Ingestão dos dados
+
+A etapa de ingestão de dados - data ingestion - é responsável por carregas os dados da fonte de dados de origem.
+
+``` {r step_02_data_ingestion, eval = FALSE}
+source("../src/datapreparation/step_02_data_ingestion.R")
+```
+
+## Step 03: Tratamento dos dados
+
+O objetivo desta etapa é analisar valores ausentes (missing values) e outras condições estranhas.
+
+``` {r step_03_data_cleaning, eval = FALSE}
+source("../src/datapreparation/step_03_data_cleaning.R")
+```
+
+##Step 04: Enriquecimento dos dados
+
+Esta etapa visa melhorar a análise adicionando informações auxiliares. O aprimoramento de dados tem tudo a ver com garantir que todos os dados que chegam às áreas de negócio sejam analisados com um olhar crítico e sejam filtrados para maximizar seu valor.
+
+``` {r step_04_data_enhancement, eval = FALSE}
+source("../src/datapreparation/step_04_data_enhancement.R")
+```
+
+##Step 05: Preparação dos datasets
+
+``` {r step_05_dataset_preparation, eval = FALSE}
+source("../src/datapreparation/step_05_dataset_preparation.R")
+```
 
 *******************************************************************************
 
