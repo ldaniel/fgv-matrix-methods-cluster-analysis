@@ -39,6 +39,14 @@ A etapa de ingestão de dados - data ingestion - é responsável por carregas os
 source("../src/datapreparation/step_02_data_ingestion.R")
 ```
 
+```{r cache=FALSE, echo=FALSE}
+knitr::read_chunk('../src/datapreparation/step_02_data_ingestion.R')
+```
+
+```{r step_02_data_ingestion.R, eval=FALSE}
+
+```
+
 ## Step 03: Tratamento dos dados
 
 O objetivo desta etapa é analisar valores ausentes (missing values) e outras condições estranhas.
@@ -47,7 +55,15 @@ O objetivo desta etapa é analisar valores ausentes (missing values) e outras co
 source("../src/datapreparation/step_03_data_cleaning.R")
 ```
 
-##Step 04: Enriquecimento dos dados
+```{r cache=FALSE, echo=FALSE}
+knitr::read_chunk('../src/datapreparation/step_03_data_cleaning.R')
+```
+
+```{r step_03_data_cleaning.R, eval=FALSE}
+
+```
+
+## Step 04: Enriquecimento dos dados
 
 Esta etapa visa melhorar a análise adicionando informações auxiliares. O aprimoramento de dados tem tudo a ver com garantir que todos os dados que chegam às áreas de negócio sejam analisados com um olhar crítico e sejam filtrados para maximizar seu valor.
 
@@ -55,10 +71,26 @@ Esta etapa visa melhorar a análise adicionando informações auxiliares. O apri
 source("../src/datapreparation/step_04_data_enhancement.R")
 ```
 
-##Step 05: Preparação dos datasets
+```{r cache=FALSE, echo=FALSE}
+knitr::read_chunk('../src/datapreparation/step_04_data_enhancement.R')
+```
+
+```{r step_04_data_enhancement.R, eval=FALSE}
+
+```
+
+## Step 05: Preparação dos datasets
 
 ``` {r step_05_dataset_preparation, eval = FALSE}
 source("../src/datapreparation/step_05_dataset_preparation.R")
+```
+
+```{r cache=FALSE, echo=FALSE}
+knitr::read_chunk('../src/datapreparation/step_05_dataset_preparation.R')
+```
+
+```{r step_05_dataset_preparation.R, eval=FALSE}
+
 ```
 
 *******************************************************************************
@@ -67,27 +99,14 @@ source("../src/datapreparation/step_05_dataset_preparation.R")
 
 Para realização deste trabalho, algumas funções foram criadas para otimizar atividades e procedimentos repetitivos. Estas funções também podem, futuramente, serem reusadas em outros projetos ou mesmo serem adicionadas uma library R.
 
-## Funções gerais
-
-``` {r ClearEnvironment, eval = FALSE}
-# clear environment, memory, console screen and plots
-ClearEnvironment <- function () {
-  rm(list=ls())
-  invisible(gc())
-  cat("\014")
-  
-  while (!is.null(dev.list()))
-    dev.off()
-}
+``` {r auxiliary_functions, eval = FALSE}
+source("../src/util/auxiliary_functions.R")
 ```
 
-## Funções de análise de clusters
-
-``` {r GetTimeSeriesDateParameters, eval = FALSE}
-# to-do
+```{r cache=FALSE, echo=FALSE}
+knitr::read_chunk('../src/util/auxiliary_functions.R')
 ```
 
+```{r auxiliary_functions.R, eval=FALSE}
 
-``` {r GenerateTrainTestDatasets, eval = FALSE}
-# to-do
 ```
