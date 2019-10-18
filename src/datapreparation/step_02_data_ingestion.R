@@ -1,7 +1,12 @@
+## ---- step_02_data_ingestion.R
+
 # performing data loading -----------------------------------------------------
 dataDirectory <- "../data/raw/"
 
-target_data <- read_xlsx(paste(dataDirectory, "base_casamentos.xlsx", sep = ""), sheet = "CASAMENTOS", skip = 1, col_names = TRUE)
+target_data <- read_xlsx(paste(dataDirectory, "base_casamentos.xlsx", sep = ""), 
+                         sheet = "CASAMENTOS", 
+                         skip = 1, 
+                         col_names = TRUE)
 
 # renaming columns
 names(target_data)[1]  <- "id"

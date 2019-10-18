@@ -1,3 +1,5 @@
+## ---- auxiliary_functions.R
+
 # functions -----------------------------------------------------------
 clearEnv <- function() {
   
