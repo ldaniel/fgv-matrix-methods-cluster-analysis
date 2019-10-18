@@ -418,11 +418,10 @@ $(document).ready(function () {
 <li><a href="#step-01-configuração-do-ambiente"><span class="toc-section-number">1.1</span> Step 01: Configuração do ambiente</a></li>
 <li><a href="#step-02-ingestão-dos-dados"><span class="toc-section-number">1.2</span> Step 02: Ingestão dos dados</a></li>
 <li><a href="#step-03-tratamento-dos-dados"><span class="toc-section-number">1.3</span> Step 03: Tratamento dos dados</a></li>
+<li><a href="#step-04-enriquecimento-dos-dados"><span class="toc-section-number">1.4</span> Step 04: Enriquecimento dos dados</a></li>
+<li><a href="#step-05-preparação-dos-datasets"><span class="toc-section-number">1.5</span> Step 05: Preparação dos datasets</a></li>
 </ul></li>
-<li><a href="#funções-criadas"><span class="toc-section-number">2</span> Funções criadas</a><ul>
-<li><a href="#funções-gerais"><span class="toc-section-number">2.1</span> Funções gerais</a></li>
-<li><a href="#funções-de-análise-de-clusters"><span class="toc-section-number">2.2</span> Funções de análise de clusters</a></li>
-</ul></li>
+<li><a href="#funções-criadas"><span class="toc-section-number">2</span> Funções criadas</a></li>
 </ul>
 </div>
 
@@ -438,39 +437,74 @@ $(document).ready(function () {
 <h2><span class="header-section-number">1.2</span> Step 02: Ingestão dos dados</h2>
 <p>A etapa de ingestão de dados - data ingestion - é responsável por carregas os dados da fonte de dados de origem.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_02_data_ingestion.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># performing data loading -----------------------------------------------------</span></a>
+<a class="sourceLine" id="cb2-2" title="2">dataDirectory &lt;-<span class="st"> &quot;../data/raw/&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">target_data &lt;-<span class="st"> </span><span class="kw">read_xlsx</span>(<span class="kw">paste</span>(dataDirectory, <span class="st">&quot;base_casamentos.xlsx&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), </a>
+<a class="sourceLine" id="cb2-5" title="5">                         <span class="dt">sheet =</span> <span class="st">&quot;CASAMENTOS&quot;</span>, </a>
+<a class="sourceLine" id="cb2-6" title="6">                         <span class="dt">skip =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb2-7" title="7">                         <span class="dt">col_names =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co"># renaming columns</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="kw">names</span>(target_data)[<span class="dv">1</span>]  &lt;-<span class="st"> &quot;id&quot;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="kw">names</span>(target_data)[<span class="dv">2</span>]  &lt;-<span class="st"> &quot;aceitar_convite&quot;</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="kw">names</span>(target_data)[<span class="dv">3</span>]  &lt;-<span class="st"> &quot;gostar_doces&quot;</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="kw">names</span>(target_data)[<span class="dv">4</span>]  &lt;-<span class="st"> &quot;emocionar&quot;</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="kw">names</span>(target_data)[<span class="dv">5</span>]  &lt;-<span class="st"> &quot;conhecer_pessoas&quot;</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="kw">names</span>(target_data)[<span class="dv">6</span>]  &lt;-<span class="st"> &quot;diversao_amigos&quot;</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="kw">names</span>(target_data)[<span class="dv">7</span>]  &lt;-<span class="st"> &quot;gostar_fotos&quot;</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="kw">names</span>(target_data)[<span class="dv">8</span>]  &lt;-<span class="st"> &quot;cansar_cerimonia&quot;</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="kw">names</span>(target_data)[<span class="dv">9</span>]  &lt;-<span class="st"> &quot;casamento_civil&quot;</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="kw">names</span>(target_data)[<span class="dv">10</span>] &lt;-<span class="st"> &quot;idade&quot;</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="kw">names</span>(target_data)[<span class="dv">11</span>] &lt;-<span class="st"> &quot;sexo&quot;</span></a></code></pre></div>
 </div>
 <div id="step-03-tratamento-dos-dados" class="section level2">
 <h2><span class="header-section-number">1.3</span> Step 03: Tratamento dos dados</h2>
 <p>O objetivo desta etapa é analisar valores ausentes (missing values) e outras condições estranhas.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_03_data_cleaning.R&quot;</span>)</a></code></pre></div>
-<p>##Step 04: Enriquecimento dos dados</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_03_data_cleaning.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># analysing missing values and other strange conditions -----------------------</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># to-do</span></a></code></pre></div>
+</div>
+<div id="step-04-enriquecimento-dos-dados" class="section level2">
+<h2><span class="header-section-number">1.4</span> Step 04: Enriquecimento dos dados</h2>
 <p>Esta etapa visa melhorar a análise adicionando informações auxiliares. O aprimoramento de dados tem tudo a ver com garantir que todos os dados que chegam às áreas de negócio sejam analisados com um olhar crítico e sejam filtrados para maximizar seu valor.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_04_data_enhancement.R&quot;</span>)</a></code></pre></div>
-<p>##Step 05: Preparação dos datasets</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_05_dataset_preparation.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_04_data_enhancement.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># this step aims to improve the analysis by adding auxiliary information ------</span></a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co"># to-do</span></a></code></pre></div>
+</div>
+<div id="step-05-preparação-dos-datasets" class="section level2">
+<h2><span class="header-section-number">1.5</span> Step 05: Preparação dos datasets</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/datapreparation/step_05_dataset_preparation.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># dataset preparation ---------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co"># The objective of this step is to return a DataFrame to be used in the</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co"># predictive modeling.</span></a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># saving the final dataset to evaluate</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw">saveRDS</span>(target_data, <span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a></code></pre></div>
 <hr />
 </div>
 </div>
 <div id="funções-criadas" class="section level1">
 <h1><span class="header-section-number">2</span> Funções criadas</h1>
 <p>Para realização deste trabalho, algumas funções foram criadas para otimizar atividades e procedimentos repetitivos. Estas funções também podem, futuramente, serem reusadas em outros projetos ou mesmo serem adicionadas uma library R.</p>
-<div id="funções-gerais" class="section level2">
-<h2><span class="header-section-number">2.1</span> Funções gerais</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># clear environment, memory, console screen and plots</span></a>
-<a class="sourceLine" id="cb5-2" title="2">ClearEnvironment &lt;-<span class="st"> </span><span class="cf">function</span> () {</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())</a>
-<a class="sourceLine" id="cb5-4" title="4">  <span class="kw">invisible</span>(<span class="kw">gc</span>())</a>
-<a class="sourceLine" id="cb5-5" title="5">  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\014</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6">  </a>
-<a class="sourceLine" id="cb5-7" title="7">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">is.null</span>(<span class="kw">dev.list</span>()))</a>
-<a class="sourceLine" id="cb5-8" title="8">    <span class="kw">dev.off</span>()</a>
-<a class="sourceLine" id="cb5-9" title="9">}</a></code></pre></div>
-</div>
-<div id="funções-de-análise-de-clusters" class="section level2">
-<h2><span class="header-section-number">2.2</span> Funções de análise de clusters</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
-</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">source</span>(<span class="st">&quot;../src/util/auxiliary_functions.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># functions -----------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb10-2" title="2">clearEnv &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb10-3" title="3">  </a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="co"># clear environment and memory</span></a>
+<a class="sourceLine" id="cb10-5" title="5">  <span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())</a>
+<a class="sourceLine" id="cb10-6" title="6">  <span class="kw">invisible</span>(<span class="kw">gc</span>())</a>
+<a class="sourceLine" id="cb10-7" title="7">  </a>
+<a class="sourceLine" id="cb10-8" title="8">  <span class="co"># clear console screen</span></a>
+<a class="sourceLine" id="cb10-9" title="9">  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\014</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb10-10" title="10">  </a>
+<a class="sourceLine" id="cb10-11" title="11">  <span class="co"># clear plots</span></a>
+<a class="sourceLine" id="cb10-12" title="12">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">is.null</span>(<span class="kw">dev.list</span>()))  </a>
+<a class="sourceLine" id="cb10-13" title="13">    <span class="kw">dev.off</span>()</a>
+<a class="sourceLine" id="cb10-14" title="14">}</a></code></pre></div>
 </div>
 
 

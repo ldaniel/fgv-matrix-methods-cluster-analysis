@@ -428,8 +428,7 @@ $(document).ready(function () {
 <h2><span class="header-section-number">1.1</span> Carregando a base de dados processada</h2>
 <p>Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de <strong>Data Preparation</strong> (preparação de dados).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">summary</span>(target_data)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">summary</span>(target_data)</a></code></pre></div>
 <pre><code>##        id        aceitar_convite  gostar_doces     emocionar    
 ##  Min.   : 1.00   Min.   :1.00    Min.   :1.000   Min.   :1.000  
 ##  1st Qu.: 8.25   1st Qu.:2.25    1st Qu.:2.000   1st Qu.:1.250  
@@ -454,6 +453,7 @@ $(document).ready(function () {
 </div>
 <div id="exploração-1" class="section level2">
 <h2><span class="header-section-number">1.2</span> Exploração 1</h2>
+<p><img src="03_data_exploration_files/figure-html/exploration_target_1-1.png" width="100%" /><img src="03_data_exploration_files/figure-html/exploration_target_1-2.png" width="100%" /></p>
 </div>
 </div>
 
