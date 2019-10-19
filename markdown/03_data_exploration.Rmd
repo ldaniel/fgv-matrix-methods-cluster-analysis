@@ -27,6 +27,7 @@ library(plotly)
 library(ggthemes)
 library(ggalluvial)
 library(ggpubr)
+library(ggcorrplot)
 
 # loading required scripts
 source("../src/util/auxiliary_functions.R")
@@ -34,7 +35,7 @@ source("../src/util/auxiliary_functions.R")
 
 # Análise inicial
 
-Texto.
+Este relatório tem o objetivo de apresentar uma série de explorações iniciais dos dados de entrevista sobre casamentos.
 
 ## Carregando a base de dados processada
 
@@ -45,19 +46,20 @@ target_data <- readRDS('../data/processed/target_dataset.rds')
 summary(target_data)
 ```
 
-## Exploração 1
+## Exploração inicial das respostas às afirmações
 
+Resultados das trinta entrevistas realizadas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente).
 
-```{r exploration_target_1, echo=FALSE, out.width = '100%'}
+```{r interview_results, echo=FALSE, out.width = '100%'}
 
-ds_aceitar_convite  <- target_data %>% group_by(escala = aceitar_convite) %>%  summarize(total_aceitar_convite = n()) 
-ds_gostar_doces     <- target_data %>% group_by(escala = gostar_doces) %>%     summarize(total_gostar_doces = n()) 
-ds_emocionar        <- target_data %>% group_by(escala = emocionar) %>%        summarize(total_emocionar = n()) 
+ds_aceitar_convite  <- target_data %>% group_by(escala = aceitar_convite)  %>% summarize(total_aceitar_convite = n()) 
+ds_gostar_doces     <- target_data %>% group_by(escala = gostar_doces)     %>% summarize(total_gostar_doces = n()) 
+ds_emocionar        <- target_data %>% group_by(escala = emocionar)        %>% summarize(total_emocionar = n()) 
 ds_conhecer_pessoas <- target_data %>% group_by(escala = conhecer_pessoas) %>% summarize(total_conhecer_pessoas = n()) 
-ds_diversao_amigos  <- target_data %>% group_by(escala = diversao_amigos) %>%  summarize(total_diversao_amigos = n()) 
-ds_gostar_fotos     <- target_data %>% group_by(escala = gostar_fotos) %>%     summarize(total_gostar_fotos = n()) 
+ds_diversao_amigos  <- target_data %>% group_by(escala = diversao_amigos)  %>% summarize(total_diversao_amigos = n()) 
+ds_gostar_fotos     <- target_data %>% group_by(escala = gostar_fotos)     %>% summarize(total_gostar_fotos = n()) 
 ds_cansar_cerimonia <- target_data %>% group_by(escala = cansar_cerimonia) %>% summarize(total_cansar_cerimonia = n()) 
-ds_casamento_civil  <- target_data %>% group_by(escala = casamento_civil) %>%  summarize(total_casamento_civil = n()) 
+ds_casamento_civil  <- target_data %>% group_by(escala = casamento_civil)  %>% summarize(total_casamento_civil = n()) 
 
 plot_aceitar_convite <- ggplot(ds_aceitar_convite, 
                                aes(x = escala, y = total_aceitar_convite)) +
@@ -121,6 +123,7 @@ ggarrange(plot_aceitar_convite,
           plot_conhecer_pessoas,
           ncol = 2, 
           nrow = 2)
+
 ggarrange(plot_diversao_amigos,
           plot_gostar_fotos,
           plot_cansar_cerimonia,
@@ -129,7 +132,23 @@ ggarrange(plot_diversao_amigos,
           nrow = 2)  
 ```
 
-```{r exploration_target_2, include=FALSE}
+## Relação entre idade e sexo dos entrevistados
+
+O box plot abaixo mostra a relação de distribuição existente entre a idade e o sexo dos entrevistados.
+
+```{r distribution_age_by_sex, echo=TRUE, out.width = '100%'}
+
+ggplot(target_data, aes(sexo, idade, 
+                        color = sexo)) + 
+  geom_boxplot(lwd = 1) + 
+    labs(title = "Box plot", 
+         subtitle = "Distribuição entre idade e sexo dos entrevistados",
+         x = "Sexo",
+         y = "Idade")
+
+```
+
+```{r exploration_3, include=FALSE}
 ds_total_geral <- ds_aceitar_convite %>% 
   left_join(ds_gostar_doces) %>%
   left_join(ds_emocionar) %>%
@@ -140,4 +159,20 @@ ds_total_geral <- ds_aceitar_convite %>%
   left_join(ds_casamento_civil)
 
 ds_total_geral[is.na(ds_total_geral)] <- 0
+```
+
+# Exploração da correlação entre as variáveis quantitativas
+
+```{r correlation_plot, echo=TRUE, out.width = '100%'}
+
+corr <- cor(target_data[, c(-1, -11)])
+
+ggcorrplot(corr, hc.order = TRUE, 
+           type = "lower", 
+           lab = TRUE, 
+           lab_size = 3, 
+           method = "circle", 
+           colors = c("tomato2", "white", "springgreen3"), 
+           title = "Correlograma das Respostas", 
+           ggtheme = theme_bw)
 ```
