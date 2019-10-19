@@ -1,6 +1,10 @@
 ---
 title: "Exploração dos Dados"
 date: "Outubro de 2019"
+
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup_exploration, include=FALSE}
@@ -50,16 +54,32 @@ summary(target_data)
 
 Resultados das trinta entrevistas realizadas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente).
 
-```{r interview_results, echo=FALSE, out.width = '100%'}
+```{r interview_results, echo=TRUE, out.width = '100%'}
 
-ds_aceitar_convite  <- target_data %>% group_by(escala = aceitar_convite)  %>% summarize(total_aceitar_convite = n()) 
-ds_gostar_doces     <- target_data %>% group_by(escala = gostar_doces)     %>% summarize(total_gostar_doces = n()) 
-ds_emocionar        <- target_data %>% group_by(escala = emocionar)        %>% summarize(total_emocionar = n()) 
-ds_conhecer_pessoas <- target_data %>% group_by(escala = conhecer_pessoas) %>% summarize(total_conhecer_pessoas = n()) 
-ds_diversao_amigos  <- target_data %>% group_by(escala = diversao_amigos)  %>% summarize(total_diversao_amigos = n()) 
-ds_gostar_fotos     <- target_data %>% group_by(escala = gostar_fotos)     %>% summarize(total_gostar_fotos = n()) 
-ds_cansar_cerimonia <- target_data %>% group_by(escala = cansar_cerimonia) %>% summarize(total_cansar_cerimonia = n()) 
-ds_casamento_civil  <- target_data %>% group_by(escala = casamento_civil)  %>% summarize(total_casamento_civil = n()) 
+ds_aceitar_convite  <- target_data %>% 
+  group_by(escala = aceitar_convite) %>% 
+  summarize(total_aceitar_convite = n()) 
+ds_gostar_doces     <- target_data %>% 
+  group_by(escala = gostar_doces) %>% 
+  summarize(total_gostar_doces = n()) 
+ds_emocionar        <- target_data %>% 
+  group_by(escala = emocionar) %>% 
+  summarize(total_emocionar = n()) 
+ds_conhecer_pessoas <- target_data %>% 
+  group_by(escala = conhecer_pessoas) %>% 
+  summarize(total_conhecer_pessoas = n()) 
+ds_diversao_amigos  <- target_data %>% 
+  group_by(escala = diversao_amigos) %>% 
+  summarize(total_diversao_amigos = n()) 
+ds_gostar_fotos     <- target_data %>% 
+  group_by(escala = gostar_fotos) %>% 
+  summarize(total_gostar_fotos = n()) 
+ds_cansar_cerimonia <- target_data %>% 
+  group_by(escala = cansar_cerimonia) %>% 
+  summarize(total_cansar_cerimonia = n()) 
+ds_casamento_civil  <- target_data %>% 
+  group_by(escala = casamento_civil) %>% 
+  summarize(total_casamento_civil = n()) 
 
 plot_aceitar_convite <- ggplot(ds_aceitar_convite, 
                                aes(x = escala, y = total_aceitar_convite)) +
