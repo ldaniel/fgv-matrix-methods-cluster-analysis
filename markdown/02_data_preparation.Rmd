@@ -81,6 +81,8 @@ knitr::read_chunk('../src/datapreparation/step_04_data_enhancement.R')
 
 ## Step 05: Preparação dos datasets
 
+Como último passo de preparação de dados, o dataset final é salvo em formato **.rds** para uso nos demais relatórios e scripts.
+
 ``` {r step_05_dataset_preparation, eval = FALSE}
 source("../src/datapreparation/step_05_dataset_preparation.R")
 ```
