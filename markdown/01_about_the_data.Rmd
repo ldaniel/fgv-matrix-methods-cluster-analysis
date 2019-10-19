@@ -15,4 +15,8 @@ Trinta entrevistas foram feitas, pedindo-se para dar uma nota de 1 (discordo tot
 7. Cerimônias de casamento longas me cansam.
 8. Acho que casamento no civil não é casamento de verdade.
 
+# Resultado da entrevista sobre Casamentos
+
 Os resultados estão na tabela do arquivo Excel **base_casamentos.xlsx** localizado na pasta **.\\data\\raw**, juntamente com as informações de sexo e idade dos entrevistados.
+
+![Respostas da entrevista sobre Casamentos.](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/casamento_entrevista_respostas.png)
