@@ -1,7 +1,7 @@
 ## ---- auxiliary_functions.R
 
 # functions -----------------------------------------------------------
-clearEnv <- function() {
+ClearRStudioEnvironment <- function() {
   
   # clear environment and memory
   rm(list=ls())
