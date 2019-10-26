@@ -5,4 +5,4 @@ date: "Outubro de 2019"
 
 # Referências utilizadas neste trabalho
 
-- [**Titulo da referência**](http://www.site.com) --Autor
+- [**HIERARCHICAL CLUSTERING IN R: THE ESSENTIALS**](https://www.datanovia.com/en/lessons/agglomerative-hierarchical-clustering/) --Alboukadel Kassambara
