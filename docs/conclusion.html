@@ -462,24 +462,26 @@ $(document).ready(function () {
 </div>
 <div id="f-interprete-os-grupos-assim-formados-usando-somente-as-variáveis-assinaladas-em-vermelho." class="section level3">
 <h3><strong>f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.</strong></h3>
-<p><strong>Cluster 1</strong>: Abaixo as respostas das observações classificadas no cluster 1:</p>
+<p><strong>Cluster 1</strong>: Abaixo as respostas das observações classificadas no <strong>cluster 1</strong>:</p>
 <p><img src="https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_1.png" /></p>
-<p><strong>Cluster 2</strong>: Abaixo as respostas das observações classificadas no cluster 1:</p>
+<p><strong>Cluster 2</strong>: Abaixo as respostas das observações classificadas no <strong>cluster 2</strong>:</p>
 <p><img src="https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_2.png" /></p>
-<p><strong>Cluster 3</strong>: Abaixo as respostas das observações classificadas no cluster 1:</p>
+<p><strong>Cluster 3</strong>: Abaixo as respostas das observações classificadas no <strong>cluster 3</strong>:</p>
 <p><img src="https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_3.png" /></p>
 </div>
 <div id="g-verifique-se-sexo-ou-idade-discriminam-bem-os-grupos." class="section level3">
 <h3><strong>g) Verifique se sexo ou idade discriminam bem os grupos.</strong></h3>
-<p><strong>Idade</strong>: conforme podemos observar existe sim uma nítida diferença na idade média dos entrevistados classificados no cluster 1 em comparação com os demais clusters.</p>
-<p>A idade do cluster 1 é de aproximadamente 4 anos de diferença.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> target_data) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> idade)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster_id) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
-<p><img src="conclusion_files/figure-html/data_cluster_idade-1.png" width="672" /></p>
-<p><strong>Sexo</strong>: conforme podemos observar existe sim uma nítida diferença na composição de sexo dos entrevistados classificados no cluster 2 em comparação com os demais clusters.</p>
-<p>No cluster 2, 80% dos entrevistados são do sexo masculino, e nos demais clusters a proporção é mais equilibrada.</p>
+<p><strong>Idade</strong>: conforme podemos observar existe sim uma nítida diferença na idade média dos entrevistados classificados no <strong>cluster 1</strong> em comparação com os demais clusters.</p>
+<p>A idade do <strong>cluster 1</strong> é de aproximadamente 4 anos de diferença.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset_classificada.rds&#39;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">ggplot</span>(<span class="dt">data =</span> target_data) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> idade)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster_id) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/data_cluster_idade-1.png" width="100%" /></p>
+<p><strong>Sexo</strong>: conforme podemos observar existe sim uma nítida diferença na composição de sexo dos entrevistados classificados no <strong>cluster 2</strong> em comparação com os demais clusters.</p>
+<p>No <strong>cluster 2</strong>, 80% dos entrevistados são do sexo masculino, e nos demais clusters a proporção é mais equilibrada.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">ds_sexo  &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(sexo, cluster_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">qtd_sexo =</span> <span class="kw">n</span>())</a>
@@ -495,7 +497,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Composição de sexo por Cluster&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>cluster_id)</a></code></pre></div>
-<p><img src="conclusion_files/figure-html/data_cluster_sexo-1.png" width="672" /></p>
+<p><img src="conclusion_files/figure-html/data_cluster_sexo-1.png" width="100%" /></p>
 </div>
 <div id="h-a-aplicação-do-método-k-means-muda-a-composição-dos-grupos" class="section level3">
 <h3><strong>h) A aplicação do método K-Means muda a composição dos grupos?</strong></h3>

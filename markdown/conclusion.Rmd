@@ -72,26 +72,27 @@ Em todos os algoritimos a melhor quantidade de clusters foi 3.
 
 ### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
-**Cluster 1**: Abaixo as respostas das observações classificadas no cluster 1:
+**Cluster 1**: Abaixo as respostas das observações classificadas no **cluster 1**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_1.png)
 
-
-**Cluster 2**: Abaixo as respostas das observações classificadas no cluster 1:
+**Cluster 2**: Abaixo as respostas das observações classificadas no **cluster 2**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_2.png)
 
-**Cluster 3**: Abaixo as respostas das observações classificadas no cluster 1:
+**Cluster 3**: Abaixo as respostas das observações classificadas no **cluster 3**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_3.png)
 
 ### **g) Verifique se sexo ou idade discriminam bem os grupos.**
 
-**Idade**: conforme podemos observar existe sim uma nítida diferença na idade média dos entrevistados classificados no cluster 1 em comparação com os demais clusters.
+**Idade**: conforme podemos observar existe sim uma nítida diferença na idade média dos entrevistados classificados no **cluster 1** em comparação com os demais clusters.
 
-A idade do cluster 1 é de aproximadamente 4 anos de diferença.
+A idade do **cluster 1** é de aproximadamente 4 anos de diferença.
 
-```{r data_cluster_idade, echo=TRUE}
+```{r data_cluster_idade, echo=TRUE, out.width='100%'}
+
+target_data <- readRDS('../data/processed/target_dataset_classificada.rds')
 
 ggplot(data = target_data) +
   geom_boxplot(aes(y = idade)) +
@@ -100,11 +101,11 @@ ggplot(data = target_data) +
 
 ```
 
-**Sexo**: conforme podemos observar existe sim uma nítida diferença na composição de sexo dos entrevistados classificados no cluster 2 em comparação com os demais clusters.
+**Sexo**: conforme podemos observar existe sim uma nítida diferença na composição de sexo dos entrevistados classificados no **cluster 2** em comparação com os demais clusters.
 
-No cluster 2, 80% dos entrevistados são do sexo masculino, e nos demais clusters a proporção é mais equilibrada.
+No **cluster 2**, 80% dos entrevistados são do sexo masculino, e nos demais clusters a proporção é mais equilibrada.
 
-```{r data_cluster_sexo, echo=TRUE}
+```{r data_cluster_sexo, echo=TRUE, out.width='100%'}
 
 ds_sexo  <- target_data %>% 
   group_by(sexo, cluster_id) %>% 
