@@ -17,6 +17,7 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 library(lubridate)
+library(knitr)
 
 # clusters analysis libraries
 library(fpc)
@@ -29,6 +30,7 @@ library(reshape2)
 library(ggplot2)
 library(plotly)
 library(ggthemes)
+library(ggrepel)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
@@ -44,15 +46,109 @@ Carregamos a base de dados alvo, previamente tratada durante os passos explicado
 target_data <- readRDS('../data/processed/target_dataset.rds')
 ```
 
-*******************************************************************************
 
-# Tópico
+Selecionameos apenas as variáveis necessárias para o processo de clusterização. 
 
-## Sub-tópico
+```{r data_subset, echo=TRUE}
 
-Descrever.
+# subsetting the dataset
+target_data <- select(target_data, -c(idade, sexo, id))
 
-```{r generating_naive_model, echo=TRUE, out.width='100%'}
-# to-do
+# scaling variables
+target_data <- sapply(target_data, scale)
+
 ```
 
+*******************************************************************************
+
+# Métodos de Clusterização
+
+## AGNES
+
+O método AGNES (Agglomerative Nesting) é um dos tipos mais comum de cluster hierárquico usado para agrupar objetos em clusters com base em sua similaridade. 
+
+O algoritmo começa tratando cada observação como um cluster. Em seguida, pares de clusters são mesclados sucessivamente até que todos os clusters tenham sido mesclados em um grande cluster contendo todos os objetos. 
+
+O resultado é uma representação baseada em árvore dos objetos, chamada dendrograma.
+
+
+Primeiramente iniciamos calculando a matriz de distancias das observações de nossa amostra
+
+```{r generating_AGNES_diss, echo=TRUE}
+
+# compute the dissimilarity matrix
+cluster_dist <- dist(target_data, method = "euclidean")
+
+# inspecting a samples of the dissimilarity matrix
+kable(as.matrix(cluster_dist)[1:6, 1:6])
+
+```
+
+Com a matriz de distancias calculadas no passo assima aplicamos o algoritimo AGNES para obter o modelo de clusterização.
+
+```{r generating_AGNES_model, echo=TRUE}
+
+# applying the AGNES algorithm
+cluster_agnes <- agnes(cluster_dist, diss = TRUE, metric = 'euclidian', method = 'complete')
+
+cluster_agnes
+
+```
+
+Visualizando o dendograma e a classificação para 3 clusters
+
+```{r generating_AGNES_viz, echo=TRUE, out.width='100%'}
+
+cluster_size <- 3
+
+fviz_dend(cluster_agnes, k = cluster_size)
+
+fviz_cluster(list(data = target_data, 
+                  cluster = cutree(cluster_agnes, k = cluster_size)),  
+             show.clust.cent = F)
+
+```
+
+```{r generating_AGNES_stats, echo=TRUE}
+
+cluster.stats(cluster_dist, cutree(cluster_agnes, k = cluster_size))
+
+```
+
+
+## K-Means
+
+```{r generating_kmeans_best_k, echo=TRUE}
+
+
+
+find_best_k_kmenas(target_data, k_limit = 29, nstart = 100)$plot
+
+```
+
+```{r generating_kmeans, echo=TRUE}
+
+cluster_size <- find_best_k_kmenas(target_data, k_limit = 29, nstart = 100)$best_k
+
+cluster_kmeans <- kmeans(target_data, cluster_size, nstart = 100)
+
+cluster_kmeans
+
+```
+
+
+```{r generating_kmeans_viz, echo=TRUE}
+
+# Visualizing clusters
+
+fviz_cluster(list(data = target_data, cluster = cluster_kmeans$cluster),
+             show.clust.cent = T)
+
+```
+
+
+```{r generating_kmeans_stats, echo=TRUE}
+
+cluster.stats(cluster_dist, cluster_kmeans$cluster)
+
+```
