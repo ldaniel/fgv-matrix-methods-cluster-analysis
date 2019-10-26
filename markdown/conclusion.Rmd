@@ -26,25 +26,24 @@ source("../src/util/auxiliary_functions.R")
 
 Responda as seguintes questões, justificando sua resposta com base em fatos, dados, gráficos etc:
 
-a)	Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?
+## a)	Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?
 
-b)	Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?
+## b)	Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?
 
-c)	É necessário padronizar as variáveis?
+## c)	É necessário padronizar as variáveis?
 
-d)	Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc). 
+Não é necessário padronizar as variáveis pois todas já estão na mesma escala de 1 a 5.
 
-e)	Quantos grupos foram obtidos? 
+## d)	Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).
 
-f)	Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
+## e)	Quantos grupos foram obtidos?
 
-g)	Verifique se sexo ou idade discriminam bem os grupos.
+Em ambos os algoritimos a melhor quantidade de clusrtes foi 3.
 
-h)	A aplicação do método K-Means muda a composição dos grupos?
+## f)	Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
 
+## g)	Verifique se sexo ou idade discriminam bem os grupos.
 
-*******************************************************************************
+## h)	A aplicação do método K-Means muda a composição dos grupos?
 
-# Tópico
-
-Descrever.
+Não, ambos os métodos classificaram as observações nos mesmos clusters.
