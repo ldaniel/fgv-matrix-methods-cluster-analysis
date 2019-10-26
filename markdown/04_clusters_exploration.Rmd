@@ -272,3 +272,11 @@ cluster.stats(cluster_dist, cluster_kmeans$cluster)
 ```
 
 Na sessão de conclusão responderemos todas as perguntas iniciais do trabalho.
+
+Finalizando o processo vamos salvar a classificaçao de cada cluster em disco para utilizarmos no conclusão da atividade
+
+```{r data_load_cluster, echo = FALSE}
+target_data <- readRDS('../data/processed/target_dataset.rds')
+target_data$cluster_id <- cluster_kmeans$cluster
+saveRDS(target_data, '../data/processed/target_dataset_classificada.rds')
+```

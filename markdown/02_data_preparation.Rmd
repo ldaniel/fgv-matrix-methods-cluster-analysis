@@ -105,3 +105,9 @@ A função irá retornar:
 ```{r find_best_k_kmenas, eval=FALSE, error = FALSE}
 <<find_best_k_kmeans>>
 ```
+
+A função abaixo foi criada para exibir as estatísticas das respostas do dataset.
+
+```{r plot_exploratory_analysis, eval=FALSE, error = FALSE}
+<<plot_exploratory_analysis>>
+```

@@ -20,6 +20,8 @@ library(knitr)
 library(stringr)
 library(zoo)
 library(forecast)
+library(ggplot2)
+library(ggpubr)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
@@ -70,7 +72,59 @@ Em todos os algoritimos a melhor quantidade de clusters foi 3.
 
 ### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
+Primeiramente incluímos a identificação do cluster no dataset original.
+
+```{r data_load_cluster, echo=TRUE}
+target_data <- readRDS('../data/processed/target_dataset_classificada.rds')
+
+```
+
+```{r data_cluster_1, echo=TRUE, out.width='100%', message=FALSE}
+
+cluster_1 = dplyr::filter(target_data, cluster_id == 1)
+
+plot_exploratory_analysis(cluster_1)
+
+```
+
+
 ### **g) Verifique se sexo ou idade discriminam bem os grupos.**
+
+**Idade**: conforme podemos observar existe sim uma nítida diferença na idade média dos entrevistados classificados no cluster 2 em comparação com os demais clusters.
+
+A idade do cluster 2 é de aproximadamente 4 anos de diferença.
+
+```{r data_cluster_idade, echo=TRUE}
+
+ggplot(data = target_data) +
+  geom_boxplot(aes(y = idade)) +
+  facet_wrap(~cluster_id)
+
+```
+
+**Sexo**: conforme podemos observar existe sim uma nítida diferença na composição de sexo dos entrevistados classificados no cluster 1 em comparação com os demais clusters.
+
+No cluster 1, 80% dos entrevistados são do sexo masculino, e nos demais clusters a proporção é mais equilibrada.
+
+```{r data_cluster_sexo, echo=TRUE}
+
+ds_sexo  <- target_data %>% 
+  group_by(sexo, cluster_id) %>% 
+  summarize(qtd_sexo = n())
+
+ds_cluster <- target_data %>% 
+  group_by(cluster_id) %>% 
+  summarise(qtd_cluster = n())
+
+ds_percent <- left_join(ds_sexo, ds_cluster, by = 'cluster_id') %>% 
+  mutate(percent_sexo = qtd_sexo / qtd_cluster)
+
+ggplot(ds_percent, aes(x = sexo, y = percent_sexo, fill = sexo)) +
+  geom_bar(stat="identity", width = .5) +
+  labs(title = "Composição de sexo por Cluster") +
+  facet_wrap(~ cluster_id)
+
+```
 
 ### **h) A aplicação do método K-Means muda a composição dos grupos?**
 
