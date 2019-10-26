@@ -477,6 +477,7 @@ $(document).ready(function () {
 <div id="exploração-inicial-das-respostas-às-afirmações" class="section level2">
 <h2><span class="header-section-number">1.2</span> Exploração inicial das respostas às afirmações</h2>
 <p>Resultados das trinta entrevistas realizadas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente).</p>
+<p>Pode-se notar que não houve concentração clara de respondentes em alguma opção de pergunta.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">ds_aceitar_convite  &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(<span class="dt">escala =</span> aceitar_convite) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_aceitar_convite =</span> <span class="kw">n</span>()) </a>

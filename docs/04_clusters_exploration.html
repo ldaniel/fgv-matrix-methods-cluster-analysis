@@ -781,23 +781,23 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb21-3" title="3">cluster_kmeans &lt;-<span class="st"> </span><span class="kw">kmeans</span>(target_data, cluster_size, <span class="dt">nstart =</span> <span class="dv">100</span>)</a>
 <a class="sourceLine" id="cb21-4" title="4"></a>
 <a class="sourceLine" id="cb21-5" title="5">cluster_kmeans</a></code></pre></div>
-<pre><code>## K-means clustering with 3 clusters of sizes 10, 15, 5
+<pre><code>## K-means clustering with 3 clusters of sizes 5, 10, 15
 ## 
 ## Cluster means:
 ##   aceitar_convite gostar_doces emocionar conhecer_pessoas diversao_amigos
-## 1        1.800000          2.1       1.4         2.600000        2.400000
-## 2        3.933333          3.8       2.4         3.933333        4.266667
-## 3        4.400000          2.6       4.8         2.600000        2.200000
+## 1        4.400000          2.6       4.8         2.600000        2.200000
+## 2        1.800000          2.1       1.4         2.600000        2.400000
+## 3        3.933333          3.8       2.4         3.933333        4.266667
 ##   gostar_fotos cansar_cerimonia casamento_civil
-## 1          2.6         4.300000        2.000000
-## 2          3.2         4.066667        2.933333
-## 3          3.2         1.600000        4.400000
+## 1          3.2         1.600000        4.400000
+## 2          2.6         4.300000        2.000000
+## 3          3.2         4.066667        2.933333
 ## 
 ## Clustering vector:
-##  [1] 2 3 2 1 1 2 2 2 1 3 2 2 1 1 1 3 2 3 1 3 2 2 1 2 2 1 2 2 1 2
+##  [1] 3 1 3 2 2 3 3 3 2 1 3 3 2 2 2 1 3 1 2 1 3 3 2 3 3 2 3 3 2 3
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 48.20000 79.06667 20.40000
+## [1] 20.40000 48.20000 79.06667
 ##  (between_SS / total_SS =  55.3 %)
 ## 
 ## Available components:
@@ -823,7 +823,7 @@ $(document).ready(function () {
 ## [1] 3
 ## 
 ## $cluster.size
-## [1] 10 15  5
+## [1]  5 10 15
 ## 
 ## $min.cluster.size
 ## [1] 5
@@ -832,31 +832,31 @@ $(document).ready(function () {
 ## [1] 0
 ## 
 ## $diameter
-## [1] 4.690416 5.291503 4.472136
+## [1] 4.472136 4.690416 5.291503
 ## 
 ## $average.distance
-## [1] 3.206379 3.273186 3.116582
+## [1] 3.116582 3.206379 3.273186
 ## 
 ## $median.distance
-## [1] 3.000000 3.162278 2.995352
+## [1] 2.995352 3.000000 3.162278
 ## 
 ## $separation
-## [1] 2.000000 2.000000 3.605551
+## [1] 3.605551 2.000000 2.000000
 ## 
 ## $average.toother
-## [1] 5.274204 5.109357 5.824446
+## [1] 5.824446 5.274204 5.109357
 ## 
 ## $separation.matrix
 ##          [,1]     [,2]     [,3]
-## [1,] 0.000000 2.000000 4.123106
-## [2,] 2.000000 0.000000 3.605551
-## [3,] 4.123106 3.605551 0.000000
+## [1,] 0.000000 4.123106 3.605551
+## [2,] 4.123106 0.000000 2.000000
+## [3,] 3.605551 2.000000 0.000000
 ## 
 ## $ave.between.matrix
 ##          [,1]     [,2]     [,3]
-## [1,] 0.000000 4.921301 6.332911
-## [2,] 4.921301 0.000000 5.485469
-## [3,] 6.332911 5.485469 0.000000
+## [1,] 0.000000 6.332911 5.485469
+## [2,] 6.332911 0.000000 4.921301
+## [3,] 5.485469 4.921301 0.000000
 ## 
 ## $average.between
 ## [1] 5.331822
@@ -881,7 +881,7 @@ $(document).ready(function () {
 ## 
 ## $clus.avg.silwidths
 ##         1         2         3 
-## 0.3377009 0.3098483 0.4280708 
+## 0.4280708 0.3377009 0.3098483 
 ## 
 ## $avg.silwidth
 ## [1] 0.3388362
@@ -911,7 +911,7 @@ $(document).ready(function () {
 ## [1] 16.69063
 ## 
 ## $cwidegap
-## [1] 2.645751 2.828427 2.645751
+## [1] 2.645751 2.645751 2.828427
 ## 
 ## $widestgap
 ## [1] 2.828427
@@ -925,6 +925,7 @@ $(document).ready(function () {
 ## $vi
 ## NULL</code></pre>
 <p>Na sessão de conclusão responderemos todas as perguntas iniciais do trabalho.</p>
+<p>Finalizando o processo vamos salvar a classificaçao de cada cluster em disco para utilizarmos no conclusão da atividade</p>
 </div>
 </div>
 

@@ -531,6 +531,111 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb8-41" title="41">  <span class="kw">return</span>(output)</a>
 <a class="sourceLine" id="cb8-42" title="42">  </a>
 <a class="sourceLine" id="cb8-43" title="43">}</a></code></pre></div>
+<p>A função abaixo foi criada para exibir as estatísticas das respostas do dataset.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">plot_exploratory_analysis &lt;-<span class="st"> </span><span class="cf">function</span>(target_data) {</a>
+<a class="sourceLine" id="cb9-2" title="2">  </a>
+<a class="sourceLine" id="cb9-3" title="3">  ds_aceitar_convite  &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> aceitar_convite) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_aceitar_convite =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-6" title="6">  ds_gostar_doces     &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> gostar_doces) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_gostar_doces =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-9" title="9">  ds_emocionar        &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> emocionar) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_emocionar =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-12" title="12">  ds_conhecer_pessoas &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> conhecer_pessoas) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_conhecer_pessoas =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-15" title="15">  ds_diversao_amigos  &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> diversao_amigos) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-17" title="17"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_diversao_amigos =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-18" title="18">  ds_gostar_fotos     &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> gostar_fotos) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_gostar_fotos =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-21" title="21">  ds_cansar_cerimonia &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-22" title="22"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> cansar_cerimonia) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-23" title="23"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_cansar_cerimonia =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-24" title="24">  ds_casamento_civil  &lt;-<span class="st"> </span>target_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-25" title="25"><span class="st">    </span><span class="kw">group_by</span>(<span class="dt">escala =</span> casamento_civil) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">total_casamento_civil =</span> <span class="kw">n</span>()) </a>
+<a class="sourceLine" id="cb9-27" title="27">  </a>
+<a class="sourceLine" id="cb9-28" title="28">  plot_aceitar_convite &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_aceitar_convite, </a>
+<a class="sourceLine" id="cb9-29" title="29">                                 <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_aceitar_convite)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-30" title="30"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;brown1&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-31" title="31"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Sempre aceito convites&quot;</span>, </a>
+<a class="sourceLine" id="cb9-32" title="32">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-33" title="33">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-34" title="34"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-35" title="35">  </a>
+<a class="sourceLine" id="cb9-36" title="36">  plot_gostar_doces &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_gostar_doces, </a>
+<a class="sourceLine" id="cb9-37" title="37">                              <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_gostar_doces)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-38" title="38"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;cadetblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-39" title="39"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;O melhor são os doces&quot;</span>, </a>
+<a class="sourceLine" id="cb9-40" title="40">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-41" title="41">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-42" title="42"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-43" title="43">  </a>
+<a class="sourceLine" id="cb9-44" title="44">  plot_emocionar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_emocionar, </a>
+<a class="sourceLine" id="cb9-45" title="45">                           <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_emocionar)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-46" title="46"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;chocolate&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-47" title="47"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Me emociono com casamentos&quot;</span>, </a>
+<a class="sourceLine" id="cb9-48" title="48">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-49" title="49">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-50" title="50"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-51" title="51">  </a>
+<a class="sourceLine" id="cb9-52" title="52">  plot_conhecer_pessoas &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_conhecer_pessoas, </a>
+<a class="sourceLine" id="cb9-53" title="53">                                  <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_conhecer_pessoas)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-54" title="54"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-55" title="55"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Oportunidade de conhecer pessoas&quot;</span>, </a>
+<a class="sourceLine" id="cb9-56" title="56">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-57" title="57">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-58" title="58"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-59" title="59">  </a>
+<a class="sourceLine" id="cb9-60" title="60">  plot_diversao_amigos &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_diversao_amigos, </a>
+<a class="sourceLine" id="cb9-61" title="61">                                 <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_diversao_amigos)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-62" title="62"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;darkorchid&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-63" title="63"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Me divirto com amigos&quot;</span>, </a>
+<a class="sourceLine" id="cb9-64" title="64">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-65" title="65">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-66" title="66"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-67" title="67">  </a>
+<a class="sourceLine" id="cb9-68" title="68">  plot_gostar_fotos &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_gostar_fotos, </a>
+<a class="sourceLine" id="cb9-69" title="69">                              <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_gostar_fotos)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-70" title="70"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;aquamarine4&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-71" title="71"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Gosto de vídeos e fotos&quot;</span>, </a>
+<a class="sourceLine" id="cb9-72" title="72">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-73" title="73">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-74" title="74"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-75" title="75">  </a>
+<a class="sourceLine" id="cb9-76" title="76">  plot_cansar_cerimonia &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_cansar_cerimonia, </a>
+<a class="sourceLine" id="cb9-77" title="77">                                  <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_cansar_cerimonia)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-78" title="78"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;darkmagenta&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-79" title="79"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cerimônias longas me cansam&quot;</span>, </a>
+<a class="sourceLine" id="cb9-80" title="80">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-81" title="81">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-82" title="82"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-83" title="83">  </a>
+<a class="sourceLine" id="cb9-84" title="84">  plot_casamento_civil &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ds_casamento_civil, </a>
+<a class="sourceLine" id="cb9-85" title="85">                                 <span class="kw">aes</span>(<span class="dt">x =</span> escala, <span class="dt">y =</span> total_casamento_civil)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-86" title="86"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">.5</span>, <span class="dt">fill =</span> <span class="st">&quot;tomato3&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-87" title="87"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Casamento no civil não vale&quot;</span>, </a>
+<a class="sourceLine" id="cb9-88" title="88">         <span class="dt">subtitle =</span> <span class="st">&quot;1 (discordo totalmente) a 5 (concordo totalmente)&quot;</span>,</a>
+<a class="sourceLine" id="cb9-89" title="89">         <span class="dt">y =</span> <span class="st">&#39;&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-90" title="90"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb9-91" title="91">  </a>
+<a class="sourceLine" id="cb9-92" title="92">  <span class="kw">ggarrange</span>(plot_aceitar_convite,</a>
+<a class="sourceLine" id="cb9-93" title="93">            plot_gostar_doces, </a>
+<a class="sourceLine" id="cb9-94" title="94">            plot_emocionar,</a>
+<a class="sourceLine" id="cb9-95" title="95">            plot_conhecer_pessoas,</a>
+<a class="sourceLine" id="cb9-96" title="96">            plot_diversao_amigos,</a>
+<a class="sourceLine" id="cb9-97" title="97">            plot_gostar_fotos,</a>
+<a class="sourceLine" id="cb9-98" title="98">            plot_cansar_cerimonia,</a>
+<a class="sourceLine" id="cb9-99" title="99">            plot_casamento_civil,</a>
+<a class="sourceLine" id="cb9-100" title="100">            <span class="dt">ncol =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb9-101" title="101">            <span class="dt">nrow =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb9-102" title="102">            <span class="dt">label.y =</span> <span class="st">&#39;&#39;</span>,</a>
+<a class="sourceLine" id="cb9-103" title="103">            <span class="dt">common.legend =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-104" title="104">}</a></code></pre></div>
 </div>
 
 
