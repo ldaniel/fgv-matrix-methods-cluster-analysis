@@ -109,6 +109,15 @@ source("../src/util/auxiliary_functions.R")
 knitr::read_chunk('../src/util/auxiliary_functions.R')
 ```
 
-```{r auxiliary_functions.R, eval=FALSE}
+A função abaixa foi desenvolvida para automatizar o processo de encontrar o melhor número de clusters para o algoritimo k-menas.
 
+A função irá retornar:
+
+1. um dataset com as métricas de withinss e betweenss para cada valor de k;
+2. o valor de k onde existe a menor distância absoluta entre as métricas withinss e betweenss;
+3. um plot demonstrando a evolução das métricas em funcão de k
+
+
+```{r find_best_k_kmenas, eval=FALSE, error = FALSE}
+<<find_best_k_kmeans>>
 ```
