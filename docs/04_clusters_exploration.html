@@ -417,8 +417,9 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#carregando-a-base-de-dados-processada"><span class="toc-section-number">1</span> Carregando a base de dados processada</a></li>
-<li><a href="#tópico"><span class="toc-section-number">2</span> Tópico</a><ul>
-<li><a href="#sub-tópico"><span class="toc-section-number">2.1</span> Sub-tópico</a></li>
+<li><a href="#métodos-de-clusterização"><span class="toc-section-number">2</span> Métodos de Clusterização</a><ul>
+<li><a href="#agnes"><span class="toc-section-number">2.1</span> AGNES</a></li>
+<li><a href="#k-means"><span class="toc-section-number">2.2</span> K-Means</a></li>
 </ul></li>
 </ul>
 </div>
@@ -427,14 +428,398 @@ $(document).ready(function () {
 <h1><span class="header-section-number">1</span> Carregando a base de dados processada</h1>
 <p>Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de <strong>Data Preparation</strong> (preparação de dados).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a></code></pre></div>
+<p>Em seguida selecionamos apenas as variáveis necessárias para o processo de clusterização.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># subsetting the dataset</span></a>
+<a class="sourceLine" id="cb2-2" title="2">target_data &lt;-<span class="st"> </span><span class="kw">select</span>(target_data, <span class="op">-</span><span class="kw">c</span>(idade, sexo, id))</a></code></pre></div>
+<p>Um procedimento necessário para datasets que contém variáveis em diferentes escalas é a padronização e normalização das escalas para o correto cálculo das métricas de distâncias utilizadas pelos algoritmos.</p>
+<p>Porém para este conjunto de dados específico todas as variáveis estão na mesma escala, sendo assim não é necessária a padronização das vaiáveis.</p>
+<p>Obteremos os mesmos resultados com as variáveis padronizadas ou não.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># target_data &lt;- sapply(target_data, scale)</span></a></code></pre></div>
 <hr />
 </div>
-<div id="tópico" class="section level1">
-<h1><span class="header-section-number">2</span> Tópico</h1>
-<div id="sub-tópico" class="section level2">
-<h2><span class="header-section-number">2.1</span> Sub-tópico</h2>
-<p>Descrever.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
+<div id="métodos-de-clusterização" class="section level1">
+<h1><span class="header-section-number">2</span> Métodos de Clusterização</h1>
+<div id="agnes" class="section level2">
+<h2><span class="header-section-number">2.1</span> AGNES</h2>
+<p>O método AGNES (Agglomerative Nesting) é um dos tipos mais comums de métyodos de cluster hierárquico usado para agrupar objetos em clusters com base em sua similaridade.</p>
+<p>O algoritmo começa tratando cada observação como um cluster. Em seguida, pares de clusters são mesclados sucessivamente até que todos os clusters tenham sido mesclados em um grande cluster contendo todos os objetos.</p>
+<p>O resultado é uma representação baseada em árvore dos objetos, chamada dendrograma.</p>
+<p>Primeiramente iniciamos calculando a matriz de distancias das observações de nossa amostra</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># compute the dissimilarity matrix</span></a>
+<a class="sourceLine" id="cb4-2" title="2">cluster_dist &lt;-<span class="st"> </span><span class="kw">dist</span>(target_data, <span class="dt">method =</span> <span class="st">&quot;euclidean&quot;</span>)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># inspecting a samples of the dissimilarity matrix</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">kable</span>(<span class="kw">as.matrix</span>(cluster_dist)[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>])</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+<th align="right">5</th>
+<th align="right">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.000000</td>
+<td align="right">3.741657</td>
+<td align="right">3.316625</td>
+<td align="right">5.000000</td>
+<td align="right">4.898980</td>
+<td align="right">5.196152</td>
+</tr>
+<tr class="even">
+<td align="right">3.741657</td>
+<td align="right">0.000000</td>
+<td align="right">5.385165</td>
+<td align="right">5.000000</td>
+<td align="right">5.656854</td>
+<td align="right">6.244998</td>
+</tr>
+<tr class="odd">
+<td align="right">3.316625</td>
+<td align="right">5.385165</td>
+<td align="right">0.000000</td>
+<td align="right">4.000000</td>
+<td align="right">3.605551</td>
+<td align="right">3.464102</td>
+</tr>
+<tr class="even">
+<td align="right">5.000000</td>
+<td align="right">5.000000</td>
+<td align="right">4.000000</td>
+<td align="right">0.000000</td>
+<td align="right">3.000000</td>
+<td align="right">5.099019</td>
+</tr>
+<tr class="odd">
+<td align="right">4.898980</td>
+<td align="right">5.656854</td>
+<td align="right">3.605551</td>
+<td align="right">3.000000</td>
+<td align="right">0.000000</td>
+<td align="right">4.582576</td>
+</tr>
+<tr class="even">
+<td align="right">5.196152</td>
+<td align="right">6.244998</td>
+<td align="right">3.464102</td>
+<td align="right">5.099019</td>
+<td align="right">4.582576</td>
+<td align="right">0.000000</td>
+</tr>
+</tbody>
+</table>
+<p>Com a matriz de distancias calculadas no passo assima aplicamos o algoritimo AGNES para obter o modelo de clusterização.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># applying the AGNES algorithm</span></a>
+<a class="sourceLine" id="cb5-2" title="2">cluster_agnes &lt;-<span class="st"> </span><span class="kw">agnes</span>(cluster_dist, <span class="dt">diss =</span> <span class="ot">TRUE</span>, <span class="dt">metric =</span> <span class="st">&#39;euclidian&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;complete&#39;</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">cluster_agnes</a></code></pre></div>
+<pre><code>## Call:     agnes(x = cluster_dist, diss = TRUE, metric = &quot;euclidian&quot;, method = &quot;complete&quot;) 
+## Agglomerative coefficient:  0.7096268 
+## Order of objects:
+##  [1]  1  7  8  3 25  6 24 27 11 28 12 17 30 21 22  4 26 15  5 29  9 14 19
+## [24] 13 23  2 16 10 18 20
+## Height (summary):
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.000   2.236   2.828   3.335   3.873   8.246 
+## 
+## Available components:
+## [1] &quot;order&quot;  &quot;height&quot; &quot;ac&quot;     &quot;merge&quot;  &quot;diss&quot;   &quot;call&quot;   &quot;method&quot;</code></pre>
+<p>Visualizando o dendograma resultante da aplicação do algoritimo.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">fviz_dend</span>(cluster_agnes)</a></code></pre></div>
+<p><img src="04_clusters_exploration_files/figure-html/generating_AGNES_viz-1.png" width="100%" /></p>
+<p>Analisanso o dendograma é possível verificar que 3 clusters parece ser a melhor escolha para o número de clusters, pois existe uma diferença alta na altuda das quebras das observações.</p>
+<p>Abaixo visualizados o dendograma para 3 clusters.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">cluster_size &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">fviz_dend</span>(cluster_agnes, <span class="dt">k =</span> cluster_size)</a></code></pre></div>
+<p><img src="04_clusters_exploration_files/figure-html/generating_AGNES_viz_2-1.png" width="100%" /></p>
+<p>Também podemos visualizar a classificação das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">fviz_cluster</span>(<span class="kw">list</span>(<span class="dt">data =</span> target_data, </a>
+<a class="sourceLine" id="cb9-2" title="2">                  <span class="dt">cluster =</span> <span class="kw">cutree</span>(cluster_agnes, <span class="dt">k =</span> cluster_size)),  </a>
+<a class="sourceLine" id="cb9-3" title="3">             <span class="dt">show.clust.cent =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="04_clusters_exploration_files/figure-html/generating_AGNES_viz_3-1.png" width="100%" /></p>
+<p>Finalmente podemos analisar todas as métricas do cluster utilizando a função cluster.stats.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">cluster.stats</span>(cluster_dist, <span class="kw">cutree</span>(cluster_agnes, <span class="dt">k =</span> cluster_size))</a></code></pre></div>
+<pre><code>## $n
+## [1] 30
+## 
+## $cluster.number
+## [1] 3
+## 
+## $cluster.size
+## [1] 15  5 10
+## 
+## $min.cluster.size
+## [1] 5
+## 
+## $noisen
+## [1] 0
+## 
+## $diameter
+## [1] 5.291503 4.472136 4.690416
+## 
+## $average.distance
+## [1] 3.273186 3.116582 3.206379
+## 
+## $median.distance
+## [1] 3.162278 2.995352 3.000000
+## 
+## $separation
+## [1] 2.000000 3.605551 2.000000
+## 
+## $average.toother
+## [1] 5.109357 5.824446 5.274204
+## 
+## $separation.matrix
+##          [,1]     [,2]     [,3]
+## [1,] 0.000000 3.605551 2.000000
+## [2,] 3.605551 0.000000 4.123106
+## [3,] 2.000000 4.123106 0.000000
+## 
+## $ave.between.matrix
+##          [,1]     [,2]     [,3]
+## [1,] 0.000000 5.485469 4.921301
+## [2,] 5.485469 0.000000 6.332911
+## [3,] 4.921301 6.332911 0.000000
+## 
+## $average.between
+## [1] 5.331822
+## 
+## $average.within
+## [1] 3.224816
+## 
+## $n.between
+## [1] 275
+## 
+## $n.within
+## [1] 160
+## 
+## $max.diameter
+## [1] 5.291503
+## 
+## $min.separation
+## [1] 2
+## 
+## $within.cluster.ss
+## [1] 147.6667
+## 
+## $clus.avg.silwidths
+##         1         2         3 
+## 0.3098483 0.4280708 0.3377009 
+## 
+## $avg.silwidth
+## [1] 0.3388362
+## 
+## $g2
+## NULL
+## 
+## $g3
+## NULL
+## 
+## $pearsongamma
+## [1] 0.7219382
+## 
+## $dunn
+## [1] 0.3779645
+## 
+## $dunn2
+## [1] 1.50352
+## 
+## $entropy
+## [1] 1.011404
+## 
+## $wb.ratio
+## [1] 0.6048244
+## 
+## $ch
+## [1] 16.69063
+## 
+## $cwidegap
+## [1] 2.828427 2.645751 2.645751
+## 
+## $widestgap
+## [1] 2.828427
+## 
+## $sindex
+## [1] 2.333333
+## 
+## $corrected.rand
+## NULL
+## 
+## $vi
+## NULL</code></pre>
+</div>
+<div id="k-means" class="section level2">
+<h2><span class="header-section-number">2.2</span> K-Means</h2>
+<p>O método de classificação por K-means é um dos algoritmos de aprendizado de máquina não supervisionados mais simples e populares.</p>
+<p>O algoritmo começa com um primeiro grupo de centroides selecionados aleatoriamente, que são usados como pontos de partida para cada cluster e, em seguida, executa cálculos iterativos para otimizar as posições dos centroides.</p>
+<p>Para cada iteração o algoritmo calcula a métrica de distância selecionada entre cada observação e o centroide classificando cada observação ao cluster cujo centroide está mais próximo.</p>
+<p>Ele interrompe a criação e otimização de clusters quando:</p>
+<ol style="list-style-type: decimal">
+<li><p>Os centroides se estabilizaram - não há alteração em seus valores porque o agrupamento foi bem-sucedido.</p></li>
+<li><p>O número definido de iterações foi alcançado.</p></li>
+</ol>
+<p>O parâmetro mais importante para o método de k-means é a quantidade de clusters que o algoritmo irá utilizar.</p>
+<p>Para encontrar a melhor quantidade de clusters podemos observar o comportamento de duas métricas, withinss e betweenss, que medem as distâncias intra-cluster e inter-clusters de cada observação e centroide dos clusters.</p>
+<p>A melhor quantidade de k é dada no ponto onde existe uma estabilização entre as métricas.</p>
+<p>Iremos utilizar uma função customizada por nós para definir a melhor quantidade de clusters a utilizar, basicamente definimos o melhor k como sendo aquele onde existe a menor diferença absoluta entre as métricas de withinss e betweenss.</p>
+<p>Mais detalhes sobre a função podem ser encontrados na sessão de preparação de dados desta pagina.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">find_best_k_kmeans</span>(target_data, <span class="dt">k_limit =</span> <span class="dv">29</span>, <span class="dt">nstart =</span> <span class="dv">100</span>)<span class="op">$</span>plot</a></code></pre></div>
+<p><img src="04_clusters_exploration_files/figure-html/generating_kmeans_best_k-1.png" width="100%" /></p>
+<p>Em seguida aplicamos o algoritmo k-means utilizando a melhor quantidade de clusters retornada pela nossa função.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">cluster_size &lt;-<span class="st"> </span><span class="kw">find_best_k_kmeans</span>(target_data, <span class="dt">k_limit =</span> <span class="dv">29</span>, <span class="dt">nstart =</span> <span class="dv">100</span>)<span class="op">$</span>best_k</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">cluster_kmeans &lt;-<span class="st"> </span><span class="kw">kmeans</span>(target_data, cluster_size, <span class="dt">nstart =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">cluster_kmeans</a></code></pre></div>
+<pre><code>## K-means clustering with 3 clusters of sizes 15, 5, 10
+## 
+## Cluster means:
+##   aceitar_convite gostar_doces emocionar conhecer_pessoas diversao_amigos
+## 1        3.933333          3.8       2.4         3.933333        4.266667
+## 2        4.400000          2.6       4.8         2.600000        2.200000
+## 3        1.800000          2.1       1.4         2.600000        2.400000
+##   gostar_fotos cansar_cerimonia casamento_civil
+## 1          3.2         4.066667        2.933333
+## 2          3.2         1.600000        4.400000
+## 3          2.6         4.300000        2.000000
+## 
+## Clustering vector:
+##  [1] 1 2 1 3 3 1 1 1 3 2 1 1 3 3 3 2 1 2 3 2 1 1 3 1 1 3 1 1 3 1
+## 
+## Within cluster sum of squares by cluster:
+## [1] 79.06667 20.40000 48.20000
+##  (between_SS / total_SS =  55.3 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
+## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
+## [9] &quot;ifault&quot;</code></pre>
+<p>Assim como fizemos para o método AGNES podemos visualizar a classificação, para o método k-means, das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).</p>
+<p>Observamos que ambos os métodos classificaram as observações nos mesmos clusters.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Visualizing clusters</span></a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw">fviz_cluster</span>(<span class="kw">list</span>(<span class="dt">data =</span> target_data, <span class="dt">cluster =</span> cluster_kmeans<span class="op">$</span>cluster),</a>
+<a class="sourceLine" id="cb15-4" title="4">             <span class="dt">show.clust.cent =</span> T)</a></code></pre></div>
+<p><img src="04_clusters_exploration_files/figure-html/generating_kmeans_viz-1.png" width="100%" /></p>
+<p>Abaixo as métricas gerais do método de classificação k-means aplicado a este dataset.</p>
+<p>Observamos que como a ambos os métodos AGNES e k-means obtém exatamente as mesmas métricas pois ambos os métodos classificaram os dados nos mesmos clusters.</p>
+<p>A única diferença são os números de identificação associados a cada cluster.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">cluster.stats</span>(cluster_dist, cluster_kmeans<span class="op">$</span>cluster)</a></code></pre></div>
+<pre><code>## $n
+## [1] 30
+## 
+## $cluster.number
+## [1] 3
+## 
+## $cluster.size
+## [1] 15  5 10
+## 
+## $min.cluster.size
+## [1] 5
+## 
+## $noisen
+## [1] 0
+## 
+## $diameter
+## [1] 5.291503 4.472136 4.690416
+## 
+## $average.distance
+## [1] 3.273186 3.116582 3.206379
+## 
+## $median.distance
+## [1] 3.162278 2.995352 3.000000
+## 
+## $separation
+## [1] 2.000000 3.605551 2.000000
+## 
+## $average.toother
+## [1] 5.109357 5.824446 5.274204
+## 
+## $separation.matrix
+##          [,1]     [,2]     [,3]
+## [1,] 0.000000 3.605551 2.000000
+## [2,] 3.605551 0.000000 4.123106
+## [3,] 2.000000 4.123106 0.000000
+## 
+## $ave.between.matrix
+##          [,1]     [,2]     [,3]
+## [1,] 0.000000 5.485469 4.921301
+## [2,] 5.485469 0.000000 6.332911
+## [3,] 4.921301 6.332911 0.000000
+## 
+## $average.between
+## [1] 5.331822
+## 
+## $average.within
+## [1] 3.224816
+## 
+## $n.between
+## [1] 275
+## 
+## $n.within
+## [1] 160
+## 
+## $max.diameter
+## [1] 5.291503
+## 
+## $min.separation
+## [1] 2
+## 
+## $within.cluster.ss
+## [1] 147.6667
+## 
+## $clus.avg.silwidths
+##         1         2         3 
+## 0.3098483 0.4280708 0.3377009 
+## 
+## $avg.silwidth
+## [1] 0.3388362
+## 
+## $g2
+## NULL
+## 
+## $g3
+## NULL
+## 
+## $pearsongamma
+## [1] 0.7219382
+## 
+## $dunn
+## [1] 0.3779645
+## 
+## $dunn2
+## [1] 1.50352
+## 
+## $entropy
+## [1] 1.011404
+## 
+## $wb.ratio
+## [1] 0.6048244
+## 
+## $ch
+## [1] 16.69063
+## 
+## $cwidegap
+## [1] 2.828427 2.645751 2.645751
+## 
+## $widestgap
+## [1] 2.828427
+## 
+## $sindex
+## [1] 2.333333
+## 
+## $corrected.rand
+## NULL
+## 
+## $vi
+## NULL</code></pre>
+<p>Na sessão de conclusão responderemos todas as perguntas iniciais do trabalho.</p>
 </div>
 </div>
 
