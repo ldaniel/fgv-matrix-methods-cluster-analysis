@@ -6,3 +6,5 @@ date: "Outubro de 2019"
 # Referências utilizadas neste trabalho
 
 - [**HIERARCHICAL CLUSTERING IN R: THE ESSENTIALS**](https://www.datanovia.com/en/lessons/agglomerative-hierarchical-clustering/) --Alboukadel Kassambara
+
+- [**Understanding K-means Clustering in Machine Learning**](https://towardsdatascience.com/understanding-k-means-clustering-in-machine-learning-6a6e67336aa1) --Dr. Michael J. Garbade
