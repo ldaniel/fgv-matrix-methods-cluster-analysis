@@ -50,9 +50,23 @@ Não é necessário padronizar as variáveis, pois todas já estão na mesma esc
 
 ### **d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).**
 
+Conforme apresentado no [Relatório de Exploração dos Clusters](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/04_clusters_exploration.html), utilizando o método **ward** temos a melhor divisão de cluster em **3**.
+
+**Dendrograma utilizando o método ward**
+![](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/04_clusters_exploration_files/figure-html/generating_AGNES_viz_2_ward-1.png)
+
+Utilizando o método **average**, embora não fique tão evidente, também temos a melhor divisão de cluster em **3**.
+
+**Dendrograma utilizando o método average**
+![](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/04_clusters_exploration_files/figure-html/generating_AGNES_viz_2_average-1.png)
+
+Embora os métodos sejam diferentes, como eles classificaram as observações nos mesmos clusteres, as métricas resultantes utilizando a função **cluster.stats** do pacote **fpc** foram exatamente iguais. 
+
+Vale lembrar que a decisão de número de clusters também impacta no resultado das métricas. Importante salientar que, embora todos os métodos tenham obtido os mesmos resultados, isso não significa que com outras observações o resultado também seria o mesmo.
+
 ### **e) Quantos grupos foram obtidos?**
 
-Em ambos os algoritimos a melhor quantidade de clusrtes foi 3.
+Em todos os algoritimos a melhor quantidade de clusters foi 3.
 
 ### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
