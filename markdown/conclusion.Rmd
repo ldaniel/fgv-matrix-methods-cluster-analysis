@@ -68,7 +68,7 @@ Vale lembrar que a decisão de número de clusters também impacta no resultado 
 
 ### **e) Quantos grupos foram obtidos?**
 
-Em todos os algoritimos a melhor quantidade de clusters foi 3.
+Em todos os algoritmos a melhor quantidade de clusters foi 3.
 
 ### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
