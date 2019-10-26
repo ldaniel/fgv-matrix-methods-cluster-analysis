@@ -324,47 +324,54 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#objetivos"><span class="toc-section-number">1</span> Objetivos</a><ul>
-<li><a href="#a-houve-concentrações-de-respostas-em-categorias-únicas-ou-houve-boa-diversidade-entre-os-respondentes"><span class="toc-section-number">1.1</span> a) Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?</a></li>
-<li><a href="#b-houve-correlação-entre-as-variáveis-assinaladas-em-vermelho-como-isso-afeta-a-cluster-analysis"><span class="toc-section-number">1.2</span> b) Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?</a></li>
-<li><a href="#c-é-necessário-padronizar-as-variáveis"><span class="toc-section-number">1.3</span> c) É necessário padronizar as variáveis?</a></li>
-<li><a href="#d-faça-cluster-analysis-método-hierárquico-agnes-com-as-variáveis-assinaladas-em-vermelho.-use-distância-euclidiana.-use-ward-e-average-compare-os-resultados-utilizando-as-métricas-que-você-aprendeu-da-função-cluster.stats-do-pacote-fpc."><span class="toc-section-number">1.4</span> d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).</a></li>
-<li><a href="#e-quantos-grupos-foram-obtidos"><span class="toc-section-number">1.5</span> e) Quantos grupos foram obtidos?</a></li>
-<li><a href="#f-interprete-os-grupos-assim-formados-usando-somente-as-variáveis-assinaladas-em-vermelho."><span class="toc-section-number">1.6</span> f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.</a></li>
-<li><a href="#g-verifique-se-sexo-ou-idade-discriminam-bem-os-grupos."><span class="toc-section-number">1.7</span> g) Verifique se sexo ou idade discriminam bem os grupos.</a></li>
-<li><a href="#h-a-aplicação-do-método-k-means-muda-a-composição-dos-grupos"><span class="toc-section-number">1.8</span> h) A aplicação do método K-Means muda a composição dos grupos?</a></li>
+<li><a href="#questões">Questões</a><ul>
+<li><a href="#a-houve-concentrações-de-respostas-em-categorias-únicas-ou-houve-boa-diversidade-entre-os-respondentes"><strong>a) Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?</strong></a></li>
+<li><a href="#b-houve-correlação-entre-as-variáveis-assinaladas-em-vermelho-como-isso-afeta-a-cluster-analysis"><strong>b) Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?</strong></a></li>
+<li><a href="#c-é-necessário-padronizar-as-variáveis"><strong>c) É necessário padronizar as variáveis?</strong></a></li>
+<li><a href="#d-faça-cluster-analysis-método-hierárquico-agnes-com-as-variáveis-assinaladas-em-vermelho.-use-distância-euclidiana.-use-ward-e-average-compare-os-resultados-utilizando-as-métricas-que-você-aprendeu-da-função-cluster.stats-do-pacote-fpc."><strong>d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).</strong></a></li>
+<li><a href="#e-quantos-grupos-foram-obtidos"><strong>e) Quantos grupos foram obtidos?</strong></a></li>
+<li><a href="#f-interprete-os-grupos-assim-formados-usando-somente-as-variáveis-assinaladas-em-vermelho."><strong>f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.</strong></a></li>
+<li><a href="#g-verifique-se-sexo-ou-idade-discriminam-bem-os-grupos."><strong>g) Verifique se sexo ou idade discriminam bem os grupos.</strong></a></li>
+<li><a href="#h-a-aplicação-do-método-k-means-muda-a-composição-dos-grupos"><strong>h) A aplicação do método K-Means muda a composição dos grupos?</strong></a></li>
 </ul></li>
 </ul>
 </div>
 
-<div id="objetivos" class="section level1">
-<h1><span class="header-section-number">1</span> Objetivos</h1>
+<div id="questões" class="section level1">
+<h1>Questões</h1>
 <p>Responda as seguintes questões, justificando sua resposta com base em fatos, dados, gráficos etc:</p>
-<div id="a-houve-concentrações-de-respostas-em-categorias-únicas-ou-houve-boa-diversidade-entre-os-respondentes" class="section level2">
-<h2><span class="header-section-number">1.1</span> a) Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?</h2>
+<div id="a-houve-concentrações-de-respostas-em-categorias-únicas-ou-houve-boa-diversidade-entre-os-respondentes" class="section level3">
+<h3><strong>a) Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?</strong></h3>
+<p>Conforme apresentado no <a href="https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html">Relatório de Exploração Inicial dos Dados</a>, a pesquisa realizada <a href="https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html#explora%C3%A7%C3%A3o-inicial-das-respostas-%C3%A0s-afirma%C3%A7%C3%B5es">trouxe boa diversidade entre os respondentes</a>.</p>
 </div>
-<div id="b-houve-correlação-entre-as-variáveis-assinaladas-em-vermelho-como-isso-afeta-a-cluster-analysis" class="section level2">
-<h2><span class="header-section-number">1.2</span> b) Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?</h2>
+<div id="b-houve-correlação-entre-as-variáveis-assinaladas-em-vermelho-como-isso-afeta-a-cluster-analysis" class="section level3">
+<h3><strong>b) Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?</strong></h3>
+<p>Sim, conforme domonstrado no <a href="https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html#explora%C3%A7%C3%A3o-da-correla%C3%A7%C3%A3o-entre-as-vari%C3%A1veis-quantitativas">correlegrama do Relatório de Exploração Inicial dos Dados</a>, as correlações entre as variáveis mais expressivas foram:</p>
+<ul>
+<li><strong>casamento_civil</strong> e <strong>cansar_cerimonia</strong></li>
+<li><strong>emocionar</strong> e <strong>cansar_cerimonia</strong></li>
+</ul>
+<p><img src="https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration_files/figure-html/correlation_plot-1.png" /></p>
 </div>
-<div id="c-é-necessário-padronizar-as-variáveis" class="section level2">
-<h2><span class="header-section-number">1.3</span> c) É necessário padronizar as variáveis?</h2>
-<p>Não é necessário padronizar as variáveis pois todas já estão na mesma escala de 1 a 5.</p>
+<div id="c-é-necessário-padronizar-as-variáveis" class="section level3">
+<h3><strong>c) É necessário padronizar as variáveis?</strong></h3>
+<p>Não é necessário padronizar as variáveis, pois todas já estão na mesma escala de 1 a 5, conforme demonstrado no <a href="https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/04_clusters_exploration.html#checando-a-necessidade-de-padroniza%C3%A7%C3%A3o-das-vari%C3%A1veis">Relatório de Exploração dos Clusters</a>.</p>
 </div>
-<div id="d-faça-cluster-analysis-método-hierárquico-agnes-com-as-variáveis-assinaladas-em-vermelho.-use-distância-euclidiana.-use-ward-e-average-compare-os-resultados-utilizando-as-métricas-que-você-aprendeu-da-função-cluster.stats-do-pacote-fpc." class="section level2">
-<h2><span class="header-section-number">1.4</span> d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).</h2>
+<div id="d-faça-cluster-analysis-método-hierárquico-agnes-com-as-variáveis-assinaladas-em-vermelho.-use-distância-euclidiana.-use-ward-e-average-compare-os-resultados-utilizando-as-métricas-que-você-aprendeu-da-função-cluster.stats-do-pacote-fpc." class="section level3">
+<h3><strong>d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).</strong></h3>
 </div>
-<div id="e-quantos-grupos-foram-obtidos" class="section level2">
-<h2><span class="header-section-number">1.5</span> e) Quantos grupos foram obtidos?</h2>
+<div id="e-quantos-grupos-foram-obtidos" class="section level3">
+<h3><strong>e) Quantos grupos foram obtidos?</strong></h3>
 <p>Em ambos os algoritimos a melhor quantidade de clusrtes foi 3.</p>
 </div>
-<div id="f-interprete-os-grupos-assim-formados-usando-somente-as-variáveis-assinaladas-em-vermelho." class="section level2">
-<h2><span class="header-section-number">1.6</span> f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.</h2>
+<div id="f-interprete-os-grupos-assim-formados-usando-somente-as-variáveis-assinaladas-em-vermelho." class="section level3">
+<h3><strong>f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.</strong></h3>
 </div>
-<div id="g-verifique-se-sexo-ou-idade-discriminam-bem-os-grupos." class="section level2">
-<h2><span class="header-section-number">1.7</span> g) Verifique se sexo ou idade discriminam bem os grupos.</h2>
+<div id="g-verifique-se-sexo-ou-idade-discriminam-bem-os-grupos." class="section level3">
+<h3><strong>g) Verifique se sexo ou idade discriminam bem os grupos.</strong></h3>
 </div>
-<div id="h-a-aplicação-do-método-k-means-muda-a-composição-dos-grupos" class="section level2">
-<h2><span class="header-section-number">1.8</span> h) A aplicação do método K-Means muda a composição dos grupos?</h2>
+<div id="h-a-aplicação-do-método-k-means-muda-a-composição-dos-grupos" class="section level3">
+<h3><strong>h) A aplicação do método K-Means muda a composição dos grupos?</strong></h3>
 <p>Não, ambos os métodos classificaram as observações nos mesmos clusters.</p>
 </div>
 </div>

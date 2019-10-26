@@ -1,6 +1,11 @@
 ---
 title: "Conclusão"
 date: "Outubro de 2019"
+
+output:
+  html_document: 
+    number_sections: no
+    toc: yes
 ---
 
 ```{r setup_evaluation, include=FALSE}
@@ -22,28 +27,37 @@ library(forecast)
 source("../src/util/auxiliary_functions.R")
 ```
 
-# Objetivos
+# Questões
 
 Responda as seguintes questões, justificando sua resposta com base em fatos, dados, gráficos etc:
 
-## a)	Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?
+### **a) Houve concentrações de respostas em categorias únicas ou houve boa diversidade entre os respondentes?**
 
-## b)	Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?
+Conforme apresentado no [Relatório de Exploração Inicial dos Dados](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html), a pesquisa realizada [trouxe boa diversidade entre os respondentes](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html#explora%C3%A7%C3%A3o-inicial-das-respostas-%C3%A0s-afirma%C3%A7%C3%B5es).
 
-## c)	É necessário padronizar as variáveis?
+### **b) Houve correlação entre as variáveis assinaladas em vermelho? Como isso afeta a Cluster Analysis?**
 
-Não é necessário padronizar as variáveis pois todas já estão na mesma escala de 1 a 5.
+Sim, conforme domonstrado no [correlegrama do Relatório de Exploração Inicial dos Dados](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration.html#explora%C3%A7%C3%A3o-da-correla%C3%A7%C3%A3o-entre-as-vari%C3%A1veis-quantitativas), as correlações entre as variáveis mais expressivas foram:
 
-## d)	Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).
+- **casamento_civil** e **cansar_cerimonia**
+- **emocionar** e **cansar_cerimonia**
 
-## e)	Quantos grupos foram obtidos?
+![](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/03_data_exploration_files/figure-html/correlation_plot-1.png)
+
+### **c) É necessário padronizar as variáveis?**
+
+Não é necessário padronizar as variáveis, pois todas já estão na mesma escala de 1 a 5, conforme demonstrado no [Relatório de Exploração dos Clusters](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis/04_clusters_exploration.html#checando-a-necessidade-de-padroniza%C3%A7%C3%A3o-das-vari%C3%A1veis).
+
+### **d) Faça Cluster Analysis (Método Hierárquico AGNES) com as variáveis assinaladas em vermelho. Use distância euclidiana. Use Ward e Average (compare os resultados utilizando as métricas que você aprendeu da função cluster.stats do pacote fpc).**
+
+### **e) Quantos grupos foram obtidos?**
 
 Em ambos os algoritimos a melhor quantidade de clusrtes foi 3.
 
-## f)	Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.
+### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
-## g)	Verifique se sexo ou idade discriminam bem os grupos.
+### **g) Verifique se sexo ou idade discriminam bem os grupos.**
 
-## h)	A aplicação do método K-Means muda a composição dos grupos?
+### **h) A aplicação do método K-Means muda a composição dos grupos?**
 
 Não, ambos os métodos classificaram as observações nos mesmos clusters.

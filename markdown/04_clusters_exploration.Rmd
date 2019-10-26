@@ -55,6 +55,8 @@ target_data <- select(target_data, -c(idade, sexo, id))
 
 ```
 
+## Checando a necessidade de padronização das variáveis
+
 Um procedimento necessário para datasets que contém variáveis em diferentes escalas é a padronização e normalização das escalas para o correto cálculo das métricas de distâncias utilizadas pelos algoritmos.
 
 Porém para este conjunto de dados específico todas as variáveis estão na mesma escala, sendo assim não é necessária a padronização das vaiáveis.
@@ -88,58 +90,118 @@ Primeiramente iniciamos calculando a matriz de distancias das observações de n
 cluster_dist <- dist(target_data, method = "euclidean")
 
 # inspecting a samples of the dissimilarity matrix
-kable(as.matrix(cluster_dist)[1:6, 1:6])
-
+as.matrix(cluster_dist)[1:6, 1:6]
 ```
 
-Com a matriz de distancias calculadas no passo assima aplicamos o algoritimo AGNES para obter o modelo de clusterização.
+### AGNES com o método **ward**
 
-```{r generating_AGNES_model, echo=TRUE}
+Com a matriz de distâncias calculadas no passo assima aplicamos o algoritimo AGNES com o método **ward** para obter o modelo de clusterização.
+
+```{r generating_AGNES_model_with_ward, echo=TRUE}
 
 # applying the AGNES algorithm
-cluster_agnes <- agnes(cluster_dist, diss = TRUE, metric = 'euclidian', method = 'complete')
+cluster_agnes_ward <- agnes(cluster_dist, 
+                       diss = TRUE, 
+                       metric = 'euclidian', 
+                       method = 'ward')
 
-cluster_agnes
-
-```
-
-Visualizando o dendograma resultante da aplicação do algoritimo.
-
-```{r generating_AGNES_viz, echo=TRUE, out.width='100%'}
-
-fviz_dend(cluster_agnes)
+cluster_agnes_ward
 
 ```
 
-Analisanso o dendograma é possível verificar que 3 clusters parece ser a melhor escolha para o número de clusters, pois existe uma diferença alta na altuda das quebras das observações.
+Visualizando o dendrograma resultante da aplicação do algoritimo.
 
-Abaixo visualizados o dendograma para 3 clusters.
+```{r generating_AGNES_viz_ward, echo=TRUE, out.width='100%'}
 
-```{r generating_AGNES_viz_2, echo=TRUE, out.width='100%'}
+fviz_dend(cluster_agnes_ward)
+
+```
+
+Analisando o dendrograma é possível verificar que 3 clusters parece ser a melhor escolha para o número de clusters utilizando o método **ward**, pois existe uma diferença significativa na altura das quebras das observações.
+
+Abaixo visualizados o dendrograma para 3 clusters.
+
+```{r generating_AGNES_viz_2_ward, echo=TRUE, out.width='100%'}
 
 cluster_size <- 3
 
-fviz_dend(cluster_agnes, k = cluster_size)
+fviz_dend(cluster_agnes_ward, k = cluster_size)
 
 ```
 
 Também podemos visualizar a classificação das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).
 
-```{r generating_AGNES_viz_3, echo=TRUE, out.width='100%'}
+```{r generating_AGNES_viz_3_ward, echo=TRUE, out.width='100%'}
 
 fviz_cluster(list(data = target_data, 
-                  cluster = cutree(cluster_agnes, k = cluster_size)),  
+                  cluster = cutree(cluster_agnes_ward, k = cluster_size)),  
              show.clust.cent = FALSE)
 
 ```
 
-Finalmente podemos analisar todas as métricas do cluster utilizando a função cluster.stats.
+Finalmente podemos analisar todas as métricas do cluster com o método **ward** utilizando a função **cluster.stats**.
 
-```{r generating_AGNES_stats, echo=TRUE}
+```{r generating_AGNES_stats_ward, echo=TRUE}
 
-cluster.stats(cluster_dist, cutree(cluster_agnes, k = cluster_size))
+cluster.stats(cluster_dist, cutree(cluster_agnes_ward, k = cluster_size))
 
 ```
+
+
+### AGNES com o método **average**
+
+Com a matriz de distâncias calculadas no passo assima aplicamos o algoritimo AGNES com o método **average** para obter o modelo de clusterização.
+
+```{r generating_AGNES_model_with_average, echo=TRUE}
+
+# applying the AGNES algorithm
+cluster_agnes_average <- agnes(cluster_dist, 
+                       diss = TRUE, 
+                       metric = 'euclidian', 
+                       method = 'average')
+
+cluster_agnes_average
+
+```
+
+Visualizando o dendrograma resultante da aplicação do algoritimo.
+
+```{r generating_AGNES_viz_average, echo=TRUE, out.width='100%'}
+
+fviz_dend(cluster_agnes_average)
+
+```
+
+Analisando o dendrograma para o número de clusters utilizando o método **average**, não fica muito evidente qual o melhor "corte" de número de clusters. Ainda assim, é possível notar que existe uma melhor distinção de grupos em 3 clusters.
+
+Abaixo visualizados o dendrograma para 3 clusters.
+
+```{r generating_AGNES_viz_2_average, echo=TRUE, out.width='100%'}
+
+cluster_size <- 3
+
+fviz_dend(cluster_agnes_average, k = cluster_size)
+
+```
+
+Também podemos visualizar a classificação das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).
+
+```{r generating_AGNES_viz_3_average, echo=TRUE, out.width='100%'}
+
+fviz_cluster(list(data = target_data, 
+                  cluster = cutree(cluster_agnes_average, k = cluster_size)),  
+             show.clust.cent = FALSE)
+
+```
+
+Finalmente podemos analisar todas as métricas do cluster com o método **average** utilizando a função **cluster.stats**.
+
+```{r generating_AGNES_stats_average, echo=TRUE}
+
+cluster.stats(cluster_dist, cutree(cluster_agnes_average, k = cluster_size))
+
+```
+
 
 ## K-Means
 
@@ -154,7 +216,6 @@ Ele interrompe a criação e otimização de clusters quando:
 1. Os centroides se estabilizaram - não há alteração em seus valores porque o agrupamento foi bem-sucedido.
 
 2. O número definido de iterações foi alcançado.
-
 
 O parâmetro mais importante para o método de k-means é a quantidade de clusters que o algoritmo irá utilizar.
 

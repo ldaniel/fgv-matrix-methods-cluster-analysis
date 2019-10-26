@@ -52,7 +52,9 @@ summary(target_data)
 
 ## Exploração inicial das respostas às afirmações
 
-Resultados das trinta entrevistas realizadas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente).
+Resultados das trinta entrevistas realizadas, pedindo-se para dar uma nota de 1 (discordo totalmente) a 5 (concordo totalmente). 
+
+Pode-se notar que não houve concentração clara de respondentes em alguma opção de pergunta.
 
 ```{r interview_results, echo=TRUE, out.width = '100%'}
 
