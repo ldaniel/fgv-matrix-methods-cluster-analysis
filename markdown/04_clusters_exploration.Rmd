@@ -30,7 +30,6 @@ library(reshape2)
 library(ggplot2)
 library(plotly)
 library(ggthemes)
-library(ggrepel)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
@@ -46,18 +45,28 @@ Carregamos a base de dados alvo, previamente tratada durante os passos explicado
 target_data <- readRDS('../data/processed/target_dataset.rds')
 ```
 
-
-Selecionameos apenas as variáveis necessárias para o processo de clusterização. 
+Em seguida selecionamos apenas as variáveis necessárias para o processo de clusterização.
 
 ```{r data_subset, echo=TRUE}
 
 # subsetting the dataset
 target_data <- select(target_data, -c(idade, sexo, id))
 
-# scaling variables
-target_data <- sapply(target_data, scale)
 
 ```
+
+Um procedimento necessário para datasets que contém variáveis em diferentes escalas é a padronização e normalização das escalas para o correto cálculo das métricas de distâncias utilizadas pelos algoritmos.
+
+Porém para este conjunto de dados específico todas as variáveis estão na mesma escala, sendo assim não é necessária a padronização das vaiáveis.
+
+Obteremos os mesmos resultados com as variáveis padronizadas ou não.
+
+```{r data_scale, eval = FALSE}
+
+# target_data <- sapply(target_data, scale)
+
+```
+
 
 *******************************************************************************
 
@@ -65,12 +74,11 @@ target_data <- sapply(target_data, scale)
 
 ## AGNES
 
-O método AGNES (Agglomerative Nesting) é um dos tipos mais comum de cluster hierárquico usado para agrupar objetos em clusters com base em sua similaridade. 
+O método AGNES (Agglomerative Nesting) é um dos tipos mais comums de métyodos de cluster hierárquico usado para agrupar objetos em clusters com base em sua similaridade. 
 
 O algoritmo começa tratando cada observação como um cluster. Em seguida, pares de clusters são mesclados sucessivamente até que todos os clusters tenham sido mesclados em um grande cluster contendo todos os objetos. 
 
 O resultado é uma representação baseada em árvore dos objetos, chamada dendrograma.
-
 
 Primeiramente iniciamos calculando a matriz de distancias das observações de nossa amostra
 
@@ -95,19 +103,37 @@ cluster_agnes
 
 ```
 
-Visualizando o dendograma e a classificação para 3 clusters
+Visualizando o dendograma resultante da aplicação do algoritimo.
 
 ```{r generating_AGNES_viz, echo=TRUE, out.width='100%'}
+
+fviz_dend(cluster_agnes)
+
+```
+
+Analisanso o dendograma é possível verificar que 3 clusters parece ser a melhor escolha para o número de clusters, pois existe uma diferença alta na altuda das quebras das observações.
+
+Abaixo visualizados o dendograma para 3 clusters.
+
+```{r generating_AGNES_viz_2, echo=TRUE, out.width='100%'}
 
 cluster_size <- 3
 
 fviz_dend(cluster_agnes, k = cluster_size)
 
+```
+
+Também podemos visualizar a classificação das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).
+
+```{r generating_AGNES_viz_3, echo=TRUE, out.width='100%'}
+
 fviz_cluster(list(data = target_data, 
                   cluster = cutree(cluster_agnes, k = cluster_size)),  
-             show.clust.cent = F)
+             show.clust.cent = FALSE)
 
 ```
+
+Finalmente podemos analisar todas as métricas do cluster utilizando a função cluster.stats.
 
 ```{r generating_AGNES_stats, echo=TRUE}
 
@@ -115,20 +141,42 @@ cluster.stats(cluster_dist, cutree(cluster_agnes, k = cluster_size))
 
 ```
 
-
 ## K-Means
 
-```{r generating_kmeans_best_k, echo=TRUE}
+O método de classificação por K-means é um dos algoritmos de aprendizado de máquina não supervisionados mais simples e populares.
+
+O algoritmo começa com um primeiro grupo de centroides selecionados aleatoriamente, que são usados como pontos de partida para cada cluster e, em seguida, executa cálculos iterativos para otimizar as posições dos centroides.
+
+Para cada iteração o algoritmo calcula a métrica de distância selecionada entre cada observação e o centroide classificando cada observação ao cluster cujo centroide está mais próximo.
+
+Ele interrompe a criação e otimização de clusters quando:
+
+1. Os centroides se estabilizaram - não há alteração em seus valores porque o agrupamento foi bem-sucedido.
+
+2. O número definido de iterações foi alcançado.
 
 
+O parâmetro mais importante para o método de k-means é a quantidade de clusters que o algoritmo irá utilizar.
 
-find_best_k_kmenas(target_data, k_limit = 29, nstart = 100)$plot
+Para encontrar a melhor quantidade de clusters podemos observar o comportamento de duas métricas, withinss e betweenss, que medem as distâncias intra-cluster e inter-clusters de cada observação e centroide dos clusters.
+
+A melhor quantidade de k é dada no ponto onde existe uma estabilização entre as métricas.
+
+Iremos utilizar uma função customizada por nós para definir a melhor quantidade de clusters a utilizar, basicamente definimos o melhor k como sendo aquele onde existe a menor diferença absoluta entre as métricas de withinss e betweenss.
+
+Mais detalhes sobre a função podem ser encontrados na sessão de preparação de dados desta pagina.
+
+```{r generating_kmeans_best_k, echo=TRUE, out.width='100%'}
+
+find_best_k_kmeans(target_data, k_limit = 29, nstart = 100)$plot
 
 ```
 
+Em seguida aplicamos o algoritmo k-means utilizando a melhor quantidade de clusters retornada pela nossa função.
+
 ```{r generating_kmeans, echo=TRUE}
 
-cluster_size <- find_best_k_kmenas(target_data, k_limit = 29, nstart = 100)$best_k
+cluster_size <- find_best_k_kmeans(target_data, k_limit = 29, nstart = 100)$best_k
 
 cluster_kmeans <- kmeans(target_data, cluster_size, nstart = 100)
 
@@ -136,8 +184,11 @@ cluster_kmeans
 
 ```
 
+Assim como fizemos para o método AGNES podemos visualizar a classificação, para o método k-means, das observações utilizando as dois principais componentes da técnica de redução de dimensionalidade PCA (Principal Component Analysis).
 
-```{r generating_kmeans_viz, echo=TRUE}
+Observamos que ambos os métodos classificaram as observações nos mesmos clusters.
+
+```{r generating_kmeans_viz, echo=TRUE, out.width='100%'}
 
 # Visualizing clusters
 
@@ -146,9 +197,17 @@ fviz_cluster(list(data = target_data, cluster = cluster_kmeans$cluster),
 
 ```
 
+Abaixo as métricas gerais do método de classificação k-means aplicado a este dataset.
+
+Observamos que como a ambos os métodos AGNES e k-means obtém exatamente as mesmas métricas pois ambos os métodos classificaram os dados nos mesmos clusters.
+
+A única diferença são os números de identificação associados a cada cluster.
+
 
 ```{r generating_kmeans_stats, echo=TRUE}
 
 cluster.stats(cluster_dist, cluster_kmeans$cluster)
 
 ```
+
+Na sessão de conclusão responderemos todas as perguntas iniciais do trabalho.
