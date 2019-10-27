@@ -73,15 +73,30 @@ Em todos os algoritmos a melhor quantidade de clusters foi 3.
 
 ### **f) Interprete os grupos assim formados, usando somente as variáveis assinaladas em vermelho.**
 
-**Cluster 1**: Abaixo as respostas das observações classificadas no **cluster 1**:
+Após realizarmos a clusterização dos respondentes e os dividir em 3 clusters, avaliando cada uma das variáveis disponíveis, podemos verificar as seguintes características para cada um deles:
+
+**Cluster 1**
+
+São pessoas que tem em média 25 anos de idade, sempre vão em casamentos quando convidados, se emocionam muito nas cerimonias e não se importam se elas forem longas! Acham que casamento no civil não é casamento de verdade, não gostam muito de doces e nem de conhecer pessoas nessa ocasião, também não se divertem tanto com os amigos durante as festas. São indiferentes quanto a ver fotos do evento. É bem dividido quanto ao sexo.
+
+Abaixo as respostas das observações classificadas no **cluster 1**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_1.png)
 
-**Cluster 2**: Abaixo as respostas das observações classificadas no **cluster 2**:
+**Cluster 2**
+
+Bem diferente do grupo 1, os integrantes do grupo 2 não costumam ir em casamentos, se cansam em cerimonias longas, acham que o casamento civil é de verdade sim e não se emocionam durante a cerimônia. Também são indiferentes quanto a ver fotos de casamentos, não gostam de doces, nem de conhecer pessoas em festas de casamento e não se divertem tanto assim com os amigos durante a festa. Possuem em média 22 anos e a grande maioria são mulheres.
+
+Abaixo as respostas das observações classificadas no **cluster 2**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_2.png)
 
-**Cluster 3**: Abaixo as respostas das observações classificadas no **cluster 3**:
+**Cluster 3**
+
+Ao analisarmos o grupo 3 podemos dizer que este grupo de pessoas possuem algumas características parecidas com o grupo 1 e 2, mas também se diferencia bastante em outros aspectos. Este grupo de pessoas quase sempre vão em casamentos, mas, diferente dos outros dois grupos, gostam muito de doces, se divertem demais com os amigos e acham que é uma boa ocasião para conhecer pessoas. Não se emocionam tanto e acham muito cansativo quando a cerimônia é longa. Também são indiferentes quanto a ver fotos do evento e
+sobre o casamento no civil. É o publico mais jovem, com aproximadamente 21 anos e é bem dividido quanto ao sexo.
+
+Abaixo as respostas das observações classificadas no **cluster 3**:
 
 ![](https://raw.githubusercontent.com/ldaniel/Matrix-Methods-Cluster-Analysis/master/images/cluster_3.png)
 
