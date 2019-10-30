@@ -81,19 +81,47 @@ plot_net_vis <- function(df, skills, n_relation) {
              shape = 'dot', borderWidthSelected = 3) %>% 
     visEdges(arrows = 'to', smooth = 'forceDirection', 
              width = 1, shadow = TRUE) %>% 
-    visOptions(highlightNearest = list(enabled = TRUE, degree = 1, algorithm = 'hierarchical')) %>% 
-    visIgraphLayout(layout = "layout_in_circle")
+    visOptions(highlightNearest = list(enabled = TRUE, degree = 1, algorithm = 'hierarchical'))
+    # visIgraphLayout(layout = "layout_in_circle")
 }
 
 # plotting big data and data science related skills ----
 
 df_filter <- df
-
-# getting the list of related skills
 skill_filter <- distinct(df, skill) %>% arrange(skill)
+search_filter <- paste('DATA SCIENCE', 'BIG DATA', 'MACHINE LEARNING',
+                       'DATA ANALYTICS', 'DEEP LEARNING',
+                       'COGNITIVE', 'NATURAL LANGUAGE',
+                      sep = '|')
 skill_filter <- filter(skill_filter, 
-                 str_detect(skill, 'DATA SCIENCE|BIG DATA|MACHINE LEARNING|DATA ANALYTICS|DEEP LEARNING|COGNITIVE|NATURALLANGUAGE'))
-
-# calling our custom function
+                 str_detect(skill, search_filter))
 plot_net_vis(df_filter, skill_filter$skill, 10)
+
+
+df_filter <- df
+skill_filter <- count(df_filter, skill, sort = TRUE)[1:3, 1]$skill
+plot_net_vis(df_filter, skill_filter, 20)
+
+
+
+library(igraph)
+
+g <- graph.formula(1-+2, 2+-5, 3-+6, 5-+8, 6+-2, 5++3, 1++3, 1++6, 8++6, 3-+8, 1-+3)
+
+plot(g)
+
+get.adjacency(g)
+
+V(g)
+E(g)
+
+library(visNetwork)
+
+visIgraph(g) %>%
+  visNodes(physics = TRUE, fixed = FALSE, shape = 'dot', borderWidthSelected = 1) %>% 
+  visEdges(arrows = 'to', smooth = 'forceDirection', width = 1, shadow = TRUE) %>% 
+  visOptions(highlightNearest = list(enabled = TRUE, degree = 1, algorithm = 'hierarchical')) %>%
+  visIgraphLayout(layout = "layout_in_circle")
   
+
+
