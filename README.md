@@ -39,7 +39,7 @@ f. Interprete os grupos assim formados, usando somente as variáveis
 g. Verifique se sexo ou idade discriminam bem os grupos.
 h. A aplicação do método K-Means muda a composição dos grupos?
 ```
-See the final website report at: [https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis](https://ldaniel.github.io/Matrix-Methods-Cluster-Analysis).
+See the final website report at: [https://ldaniel.github.io/fgv-matrix-methods-cluster-analysis](https://ldaniel.github.io/fgv-matrix-methods-cluster-analysis).
 
 ## Professor
 - Rodrigo Togneri
